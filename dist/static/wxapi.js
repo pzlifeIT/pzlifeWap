@@ -19,7 +19,9 @@ export default {
         signature: getMsg.signature, //签名
         jsApiList: [ //需要调用的JS接口列表
           'onMenuShareAppMessage', //分享给好友
-          'onMenuShareTimeline' //分享到朋友圈
+          'onMenuShareTimeline', //分享到朋友圈
+          'checkJsApi',
+          'showMenuItems'
         ]
       });
 
