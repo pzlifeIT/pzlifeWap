@@ -1,5 +1,4 @@
 (function (designWidth, maxWidth) {
-  console.log("执行了")
   var doc = document,
     win = window,
     docEl = doc.documentElement,

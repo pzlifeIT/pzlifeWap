@@ -8,7 +8,7 @@ export default {
   wxShowMenu: function (api) {
     // let api = this.host;
     console.log(api)
-    Vue.axios.post('http://test.xyk.com/wxtest').then(function (res) {
+    Vue.axios.post(api).then(function (res) {
       var getMsg = res.data.data;
       wx.config({
         debug: false, //生产环境需要关闭debug模式
