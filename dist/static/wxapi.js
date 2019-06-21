@@ -11,7 +11,7 @@ export default {
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
       wx.config({
-        debug: false, //生产环境需要关闭debug模式
+        debug: true, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
         timestamp: getMsg.timestamp, //生成签名的时间戳
         nonceStr: getMsg.nonceStr, //生成签名的随机字符串
