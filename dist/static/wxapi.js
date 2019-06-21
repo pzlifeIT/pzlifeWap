@@ -26,17 +26,17 @@ export default {
       });
 
       wx.ready(function () {
-        wx.checkJsApi({
-          jsApiList: ["showMenuItems"],
-          success: function (res) {
-            wx.showMenuItems({
-              menuList: [
-                'menuItem:share:appMessage', //发送给朋友
-                'menuItem:share:timeline' //分享到朋友圈
-              ]
-            });
-          }
-        });
+        // wx.checkJsApi({
+        //   jsApiList: ["showMenuItems"],
+        //   success: function (res) {
+        //     wx.showMenuItems({
+        //       menuList: [
+        //         'menuItem:share:appMessage', //发送给朋友
+        //         'menuItem:share:timeline' //分享到朋友圈
+        //       ]
+        //     });
+        //   }
+        // });
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
