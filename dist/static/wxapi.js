@@ -10,6 +10,7 @@ export default {
     console.log(host)
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
+      alert(getMsg)
       wx.config({
         debug: true, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
@@ -17,8 +18,8 @@ export default {
         nonceStr: getMsg.nonceStr, //生成签名的随机字符串
         signature: getMsg.signature, //签名
         jsApiList: [ //需要调用的JS接口列表
-          'updateAppMessageShareData', //分享给好友
-          'updateTimelineShareData', //分享到朋友圈
+          'onMenuShareAppMessage', //分享给好友
+          'onMenuShareTimeline', //分享到朋友圈
           'showMenuItems',
           'hideMenuItems'
         ]
@@ -38,7 +39,7 @@ export default {
         });
 
         //分享到朋友圈
-        wx.updateTimelineShareData({
+        wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
           link: getMsg.url, // 分享链接
@@ -51,7 +52,7 @@ export default {
         });
 
         //分享给朋友
-        wx.updateAppMessageShareData({
+        wx.onMenuShareAppMessage({
           title: share_title, // 分享标题
           desc: "", // 分享描述
           link: getMsg.url, // 分享链接
