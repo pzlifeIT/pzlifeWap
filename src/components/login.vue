@@ -89,7 +89,9 @@
         let phone = this.phone;
         let api = this.host.apiHost + '/user/sendvercode'
         Vue.axios.post(api, {mobile: phone, stype: 3}).then((res) => {
-          this.timeOut()
+          if (res.data.code == 200) {
+            this.timeOut()
+          }
         })
       },
       timeOut: function () {
@@ -147,7 +149,7 @@
         let that = this;
         Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode}).then((res) => {
           console.log(res);
-          switch (parseInt(res.code)) {
+          switch (parseInt(res.data.code)) {
             case 200:
               localStorage.setItem("con_id", res.con_id);
               that.$router.push({path: '/'});
@@ -205,21 +207,21 @@
         let api = this.host.apiHost + 'user/wxaccredit';
         let that = this
         console.log(api)
-        let loca = window.location.origin;
+        let loca = window.location.href;
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
           console.log(res.data.requestUrl)
           switch (parseInt(res.data.code)) {
             case 200:
-              // window.location.href = res.data.requestUrl;
-              Vue.axios.get(res.data.requestUrl).then((res) => {
-                console.log(123 + res)
-                that.isCode()
-              }, (res) => {
-                that.title = res;
-                that.msg = true;
-                console.log("456" + res)
-              });
+              window.location.href = res.data.requestUrl;
+              // Vue.axios.get(res.data.requestUrl).then((res) => {
+              //   console.log(123 + res)
+                that.isCode();
+              // }, (res) => {
+              //   that.title = res;
+              //   that.msg = true;
+              //   console.log("456" + res)
+              // });
               break;
             case 3000:
               that.title = "错误码:" + res.data.code;

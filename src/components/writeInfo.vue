@@ -47,20 +47,22 @@
   import Vue from 'vue'
   import axios from 'axios'
   import VueAxios from 'vue-axios'
-  Vue.use(VueAxios,axios)
+
+  Vue.use(VueAxios, axios)
   export default {
     name: "B",
     data() {
       return {
         name: '',
         phone: '',
-        code:'',
+        code: '',
         status: true,
-        msg:false,
-        title:"",
-        isClick:true,
-        text:"获取验证码",
-        webTitle:"招募合伙人"
+        msg: false,
+        title: "",
+        isClick: true,
+        text: "获取验证码",
+        webTitle: "招募合伙人",
+        hid: 0
       }
     },
     methods: {
@@ -69,12 +71,12 @@
         let that = this;
         let name = this.name;
         let phone = this.phone;
-        if (name == ''){
+        if (name == '') {
           this.title = "请填写姓名";
           this.msg = true;
           return
         }
-        if (phone == '' || phone.length < 11){
+        if (phone == '' || phone.length < 11) {
           this.title = "请检查手机号";
           this.msg = true;
           return
@@ -82,64 +84,64 @@
         let api = this.host.apiHost + 'wap/SupPromoteSignUp';
         let hid = this.hid;
         let con_id = localStorage.getItem('con_id');
-       Vue.axios.post(api,{
-         promote_id:hid,
-         con_id:con_id,
-         mobile: phone,
-         nick_name:name
-       }).then((res)=>{
-         switch (parseInt(res.data.code)) {
-           case 200:
-             that.status = true
-                 break;
-           case 3000:
-             that.title = '发送失败'
-         }
-       }).catch((res)=>{
-         that.title = "网络错误";
-         that.msg = true
+        Vue.axios.post(api, {
+          promote_id: hid,
+          con_id: con_id,
+          mobile: phone,
+          nick_name: name
+        }).then((res) => {
+          switch (parseInt(res.data.code)) {
+            case 200:
+              that.status = true;
+              break;
+            case 3000:
+              that.title = '发送失败';
+              that.msg = true;
+              break;
+            case 3001:
+            case 3002:
+              that.title = "con_id错误";
+              that.msg = true;
+              break;
+            case 3003:
+              that.title = 'promote_id有误';
+              that.msg = true;
+              break;
+            case 3004:
+              that.title = '手机号错误';
+              that.msg = true;
+              break;
+            case 3005:
+              that.title = '已经参加过了';
+              that.msg = true;
+              break;
+            case 3006:
+              that.title = '请填写姓名';
+              that.msg = true;
+              break;
+            default:
+              that.title = '未知错误';
+              that.msg = true;
+              break;
+          }
+        }).catch((res) => {
+          that.title = "网络错误";
+          that.msg = true
         })
         console.log(name)
         this.status = false
       },
-      toB(){
+      toB() {
         this.msg = false
       },
-      //获取验证码
-      getCode(){
-        if (!this.isClick) {
-          return false
-        }
-        if(this.phone == '' || this.phone.length < 11){
-          this.title = "请检查手机号";
-          this.msg = true;
-          return
-        }
-        let phone = this.phone
-        Vue.axios.post('https://wwwapi.pzlive.vip/index/user/sendvercode',{mobile:phone,stype:3}).then((res) => {
-          this.timeOut()
-        }).catch((err) => {
 
-        })
-      },
-      timeOut:function(){
-        let time = 60;
-        let that = this;
-        let i = setInterval(function () {
-          time--;
-          if (time < 1){
-            that.text = '获取验证码';
-            that.isClick = true;
-            clearInterval(i);
-            return
-          }
-          that.text = time + '秒后重发'
-          that.isClick = false
-        },1000)
-      },
       toHome() {
         this.$router.push({path: '/'})
       }
+    },
+    mounted() {
+      let hid = this.$route.params.hid;
+      this.hid = hid
     }
   }
 </script>
@@ -153,9 +155,11 @@
     top: 0;
     left: 0;
   }
-.hint{
-  line-height: 148px;
-}
+
+  .hint {
+    line-height: 148px;
+  }
+
   .info {
     width: 731px;
     height: 727px;
@@ -271,6 +275,7 @@
     right: 20px;
     z-index: 10;
   }
+
   .pop-hint {
     width: 750px;
     height: 100%;
@@ -283,6 +288,7 @@
     justify-content: center;
     align-items: center;
   }
+
   .pop-center {
     width: 580px;
     /*height: 238px;*/
@@ -301,9 +307,11 @@
     color: #404040;
     font-size: 34px;
   }
-  p:nth-of-type(2){
+
+  p:nth-of-type(2) {
     font-size: 28px;
   }
+
   .pop-button {
     width: 100%;
     height: 90px;

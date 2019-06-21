@@ -2,7 +2,7 @@
   <div>
     <div id="container">
       <img class="img" :src="active.big_image" alt="">
-      <router-link class="jump" to="/b/">报名参加</router-link>
+      <router-link class="jump" to="/b/hid">报名参加</router-link>
       <router-view></router-view>
     </div>
 
@@ -49,12 +49,6 @@
           this.loginStatus = true
         }
       },
-      getLoginStatus() {
-        //判断是否登录，如果登录了就填写信息，如果没有就跳转到登录
-        //請求獲取信息接口
-        let api = this.host.apiHost + 'user/getuser';
-        Vue.axios.post(api,)
-      },
       none() {
         this.loginStatus = false
       },
@@ -70,6 +64,9 @@
         Vue.axios.post(api, {con_id: con_id}).then((res) => {
           let code = parseInt(res.data.code)
           switch (code) {
+            case 200:
+              that.loginStatus = true;
+              break;
             case 5000:
               that.loginStatus = true;
               break;
@@ -101,10 +98,13 @@
       enUrl() {
         let url = window.location.href;
         // console.log(url)
-        let hid = url.split('?')[1].split('&')[0].split('=')[1];
-        let pid = url.split('?')[1].split('&')[1].split('=')[1];
-        this.hid = hid;
-        this.pid = pid;
+        if (url.indexOf("?") != -1){
+          let hid = url.split('?')[1].split('&')[0].split('=')[1];
+          let pid = url.split('?')[1].split('&')[1].split('=')[1];
+          this.hid = hid;
+          this.pid = pid;
+        }
+
       }
     },
     mounted() {

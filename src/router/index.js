@@ -17,7 +17,7 @@ export default new Router({
       meta:{title:"招募合伙人"}
     },
     {
-      path:'/b',
+      path:'/b/:hid',
       name:'B',
       component:B,
       meta:{title:"招募合伙人"}
