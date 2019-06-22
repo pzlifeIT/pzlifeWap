@@ -231,7 +231,7 @@
               localStorage.setItem("active", res.data.promote)
               that.active = res.data.promote;
               document.getElementById('title').innerHTML = res.data.promote.title
-              let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.origin;
+              let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href;
               let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
               this.WXConfig.wxShowMenu(Host, res.data.promote.share_image,  res.data.promote.share_title, api);
               break;
@@ -244,10 +244,10 @@
         let url = window.location.href;
         // console.log(url)
         if (url.indexOf("?") != -1) {
-          let hid = url.split('?')[1].split('&')[0].split('=')[1];
-          let pid = url.split('?')[1].split('&')[1].split('=')[1];
-          this.hid = hid;
-          this.pid = pid;
+          // let hid = url.split('?')[1].split('&')[0].split('=')[1];
+          // let pid = url.split('?')[1].split('&')[1].split('=')[1];
+          // this.hid = hid;
+          // this.pid = pid;
         }
 
       }
