@@ -53,6 +53,7 @@ export default {
                 console.log(res.data.code)
                 if (res.data.code == 200){
                   localStorage.setItem('bg',bg_image)
+                  window.location.replace(window.location.href)
                 }
               })
           }
@@ -70,7 +71,7 @@ export default {
               if (res.data.code == 200){
                 localStorage.setItem('bg',bg_image)
                 // bg.image = bg_image
-                window.location.reload()
+                window.location.replace(window.location.href)
               }
             })
           }
