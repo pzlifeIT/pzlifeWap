@@ -52,14 +52,14 @@
     jQuery.getJSON('https://wwwapi.pzlive.vip/index/wap/getJsapiTicket?url=' + encodeURI(location.href), function(
         data) {
         console.log(data);
-        console.log(data.signpackage);
+        console.log(data.signPackage);
         if (data.code == 200) {
             wx.config({
                 debug: true,
-                appId: data.signpackage.appId,
-                timestamp: parseInt(data.signpackage.timestamp),
-                nonceStr: data.signpackage.nonceStr,
-                signature: data.signpackage.signature,
+                appId: data.signPackage.appId,
+                timestamp: parseInt(data.signPackage.timestamp),
+                nonceStr: data.signPackage.nonceStr,
+                signature: data.signPackage.signature,
                 jsApiList: [
                     'checkJsApi',
                     'onMenuShareAppMessage'
