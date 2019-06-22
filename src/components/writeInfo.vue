@@ -112,7 +112,6 @@
     },
     mounted() {
       let id = this.$route.params.hid;
-      alert(id)
       this.hid = id
     }
   }

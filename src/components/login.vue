@@ -121,7 +121,10 @@
           this.msg = true;
           return
         }
+
         localStorage.setItem('loginStatus',1);
+        localStorage.setItem('mobile',this.phone);
+        localStorage.setItem('vercode',this.vercode);
         this.wxLogin()
 
       },
@@ -142,8 +145,8 @@
         this.wxLogin()
       },
       verCode(code) {
-        let mobile = this.phone;
-        let vercode = this.vercode;
+        let mobile =  localStorage.getItem('mobile');
+        let vercode = localStorage.getItem('vercode');
         let api = this.host.apiHost + 'user/wxregister';
         let that = this;
         Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode}).then((res) => {
@@ -210,9 +213,8 @@
         let loca = window.location.href;
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
-          // alert(res.data.requestUrl)
+
           console.log(res.data.requestUrl)
-         // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeead1475c05cde84&redirect_uri=https%3A%2F%2Fwapdev.pzlive.vip%2Flogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
           switch (parseInt(res.data.code)) {
             case 200:
               window.location.href = res.data.requestUrl;
@@ -263,6 +265,8 @@
       },
       //用code登陸
       wxregister(code) {
+        let mobile = this.phone
+        let vercode = this.vercode
         let api = this.host.apiHost + 'user/loginuserbywx';
         let that = this;
         Vue.axios.post(api, {code: code, platform: 2}).then((res) => {

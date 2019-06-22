@@ -10,40 +10,42 @@ export default {
     console.log(host)
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
+      console.log(getMsg.url)
       console.log(getMsg)
-      console.log(window.location.href.split('#')[0])
       wx.config({
         debug: true, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
-        timestamp: getMsg.timestamp, //生成签名的时间戳
+        timestamp: parseInt(getMsg.timestamp), //生成签名的时间戳
         nonceStr: getMsg.nonceStr, //生成签名的随机字符串
         signature: getMsg.signature, //签名
         jsApiList: [ //需要调用的JS接口列表
           'onMenuShareAppMessage', //分享给好友
           'onMenuShareTimeline', //分享到朋友圈
-          'checkJsApi',
           'showMenuItems'
         ]
+      });
+      wx.error(function (res) {
+        console.log(res)
       });
 
       wx.ready(function () {
         // wx.checkJsApi({
-        //   jsApiList: ["showMenuItems"],
-        //   success: function (res) {
-        //     wx.showMenuItems({
-        //       menuList: [
-        //         'menuItem:share:appMessage', //发送给朋友
-        //         'menuItem:share:timeline' //分享到朋友圈
-        //       ]
-        //     });
-        //   }
+        //   jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
+          // success: function (res) {
+          //   wx.showMenuItems({
+          //     menuList: [
+          //       'menuItem:share:appMessage', //发送给朋友
+          //       'menuItem:share:timeline' //分享到朋友圈
+          //     ]
+          //   });
+          // }
         // });
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link: window.location.href.split('#')[0], // 分享链接
+          link:getMsg.url, // 分享链接
           imgUrl: share_img, // 分享图标
           success:function () {
               Vue.axios.get(api).then((res)=>{
@@ -56,7 +58,7 @@ export default {
         wx.onMenuShareAppMessage({
           title: share_title, // 分享标题
           desc: "", // 分享描述
-          link: window.location.href.split('#')[0], // 分享链接
+          link: getMsg.url, // 分享链接
           imgUrl: share_img, // 分享图标
           success:function () {
             Vue.axios.get(api).then((res)=>{
