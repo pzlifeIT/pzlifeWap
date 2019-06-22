@@ -52,7 +52,7 @@ export default {
               Vue.axios.get(api).then((res)=>{
                 console.log(res.data.code)
                 if (res.data.code == 200){
-                  localStorage.setItem('bg',bg_image)
+                  // localStorage.setItem('bg',bg_image)
                 }
               })
           }
@@ -68,7 +68,8 @@ export default {
             Vue.axios.get(api).then((res)=>{
               console.log(res.data.code)
               if (res.data.code == 200){
-                localStorage.setItem('bg',bg_image)
+                // localStorage.setItem('bg',bg_image)
+                bg.active.big_image = bg_image
               }
             })
           }
