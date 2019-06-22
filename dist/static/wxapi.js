@@ -68,8 +68,8 @@ export default {
             Vue.axios.get(api).then((res)=>{
               console.log(res.data.code)
               if (res.data.code == 200){
-                // localStorage.setItem('bg',bg_image)
-                bg.image = bg_image
+                localStorage.setItem('bg',bg_image)
+                // bg.image = bg_image
                 window.location.reload()
               }
             })
