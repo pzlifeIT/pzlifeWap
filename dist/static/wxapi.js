@@ -4,7 +4,7 @@ import Vue from 'vue'
 import config from '../static/config'
 import bg from '../src/components/bossActive'
 Vue.use(VueAxios,axios);
-Vue.use(bg)
+// Vue.use(bg)
 export default {
   wxShowMenu: function (host,share_img,share_title,api,bg_image) {
     // let api = this.host;
@@ -52,7 +52,7 @@ export default {
               Vue.axios.get(api).then((res)=>{
                 console.log(res.data.code)
                 if (res.data.code == 200){
-                  // localStorage.setItem('bg',bg_image)
+                  localStorage.setItem('bg',bg_image)
                 }
               })
           }
@@ -68,8 +68,7 @@ export default {
             Vue.axios.get(api).then((res)=>{
               console.log(res.data.code)
               if (res.data.code == 200){
-                // localStorage.setItem('bg',bg_image)
-                bg.image = bg_image
+                localStorage.setItem('bg',bg_image)
               }
             })
           }
