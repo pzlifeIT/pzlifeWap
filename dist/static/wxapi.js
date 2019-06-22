@@ -10,8 +10,8 @@ export default {
     console.log(host)
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
+      console.log(getMsg.url)
       console.log(getMsg)
-      console.log(window.location.href.split('#')[0])
       wx.config({
         debug: true, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
