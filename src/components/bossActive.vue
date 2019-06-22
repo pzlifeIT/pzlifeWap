@@ -254,14 +254,16 @@
     },
     mounted() {
       this.enUrl();
-      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.origin;
-      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
+      // let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.origin;
+      // let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       this.isCon_id();
       this.getActive();
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
-
+      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href);
+      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
+      this.WXConfig.wxShowMenu(Host, '',  '分享成功', api);
     }
   }
 </script>
