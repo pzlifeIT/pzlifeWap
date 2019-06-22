@@ -28,7 +28,7 @@ export default {
 
       wx.ready(function () {
         wx.checkJsApi({
-          jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
+          jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline",'showMenuItems'],
           success: function (res) {
             wx.showMenuItems({
               menuList: [
