@@ -2,12 +2,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
 import config from '../static/config'
-import bg from '../src/components/bossActive'
-
 Vue.use(VueAxios, axios);
-Vue.use(bg)
 export default {
-  wxShowMenu: function (host, share_img, share_title, bg_image, callback) {
+  wxShowMenu: function (host, share_img, share_title, callback) {
     // let api = this.host;
     console.log(host)
     Vue.axios.get(host).then(function (res) {
