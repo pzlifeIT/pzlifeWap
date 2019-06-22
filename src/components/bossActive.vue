@@ -261,7 +261,7 @@
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
-      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + encodeURI(window.location.href);
+      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href);
       let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       this.WXConfig.wxShowMenu(Host, '',  '分享成功', api);
     }
