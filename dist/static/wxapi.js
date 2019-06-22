@@ -21,26 +21,25 @@ export default {
         jsApiList: [ //需要调用的JS接口列表
           'onMenuShareAppMessage', //分享给好友
           'onMenuShareTimeline', //分享到朋友圈
-          'checkJsApi',
           'showMenuItems'
         ]
       });
       wx.error(function (res) {
         console.log(res)
       });
-      
+
       wx.ready(function () {
-        // wx.checkJsApi({
-        //   jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline",'showMenuItems'],
-        //   success: function (res) {
-        //     wx.showMenuItems({
-        //       menuList: [
-        //         'menuItem:share:appMessage', //发送给朋友
-        //         'menuItem:share:timeline' //分享到朋友圈
-        //       ]
-        //     });
-        //   }
-        // });
+        wx.checkJsApi({
+          jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
+          // success: function (res) {
+          //   wx.showMenuItems({
+          //     menuList: [
+          //       'menuItem:share:appMessage', //发送给朋友
+          //       'menuItem:share:timeline' //分享到朋友圈
+          //     ]
+          //   });
+          // }
+        });
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
