@@ -3,10 +3,11 @@ import VueAxios from 'vue-axios'
 import Vue from 'vue'
 import config from '../static/config'
 import bg from '../src/components/bossActive'
-Vue.use(VueAxios,axios);
+
+Vue.use(VueAxios, axios);
 Vue.use(bg)
 export default {
-  wxShowMenu: function (host,share_img,share_title,api,bg_image) {
+  wxShowMenu: function (host, share_img, share_title, bg_image, callback) {
     // let api = this.host;
     console.log(host)
     Vue.axios.get(host).then(function (res) {
@@ -32,30 +33,24 @@ export default {
       wx.ready(function () {
         // wx.checkJsApi({
         //   jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
-          // success: function (res) {
-          //   wx.showMenuItems({
-          //     menuList: [
-          //       'menuItem:share:appMessage', //发送给朋友
-          //       'menuItem:share:timeline' //分享到朋友圈
-          //     ]
-          //   });
-          // }
+        // success: function (res) {
+        //   wx.showMenuItems({
+        //     menuList: [
+        //       'menuItem:share:appMessage', //发送给朋友
+        //       'menuItem:share:timeline' //分享到朋友圈
+        //     ]
+        //   });
+        // }
         // });
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link:getMsg.url, // 分享链接
+          link: getMsg.url, // 分享链接
           imgUrl: share_img, // 分享图标
-          success:function () {
-              Vue.axios.get(api).then((res)=>{
-                console.log(res.data.code)
-                if (res.data.code == 200){
-                  localStorage.setItem('bg',bg_image)
-                  window.location.replace(window.location.href)
-                }
-              })
+          success: function () {
+            callback()
           }
         });
 
@@ -65,15 +60,8 @@ export default {
           desc: "", // 分享描述
           link: getMsg.url, // 分享链接
           imgUrl: share_img, // 分享图标
-          success:function () {
-            Vue.axios.get(api).then((res)=>{
-              console.log(res.data.code)
-              if (res.data.code == 200){
-                localStorage.setItem('bg',bg_image)
-                // bg.image = bg_image
-                window.location.replace(window.location.href)
-              }
-            })
+          success: function () {
+            callback()
           }
         });
       });
