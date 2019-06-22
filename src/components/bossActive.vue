@@ -262,7 +262,7 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href;
-      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       this.WXConfig.wxShowMenu(Host, '',  '分享成功', api);
     }
   }
