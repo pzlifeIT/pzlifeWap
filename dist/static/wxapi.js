@@ -15,7 +15,7 @@ export default {
       wx.config({
         debug: true, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
-        timestamp: getMsg.timestamp, //生成签名的时间戳
+        timestamp: parseInt(getMsg.timestamp), //生成签名的时间戳
         nonceStr: getMsg.nonceStr, //生成签名的随机字符串
         signature: getMsg.signature, //签名
         jsApiList: [ //需要调用的JS接口列表
