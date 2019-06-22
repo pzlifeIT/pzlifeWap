@@ -29,8 +29,8 @@ export default {
       });
 
       wx.ready(function () {
-        wx.checkJsApi({
-          jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
+        // wx.checkJsApi({
+        //   jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
           // success: function (res) {
           //   wx.showMenuItems({
           //     menuList: [
@@ -39,13 +39,13 @@ export default {
           //     ]
           //   });
           // }
-        });
+        // });
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link: getMsg.url, // 分享链接
+          link: window.location.href.split('#')[0], // 分享链接
           imgUrl: share_img, // 分享图标
           success:function () {
               Vue.axios.get(api).then((res)=>{
@@ -58,7 +58,7 @@ export default {
         wx.onMenuShareAppMessage({
           title: share_title, // 分享标题
           desc: "", // 分享描述
-          link: getMsg.url, // 分享链接
+          link: window.location.href.split('#')[0], // 分享链接
           imgUrl: share_img, // 分享图标
           success:function () {
             Vue.axios.get(api).then((res)=>{
