@@ -52,7 +52,8 @@
     jQuery.getJSON('https://wwwapi.pzlive.vip/index/wap/getJsapiTicket?url=' + encodeURI(location.href), function(
         data) {
         console.log(data);
-        if (data.code == 1) {
+        console.log(data.signpackage);
+        if (data.code == 200) {
             wx.config({
                 debug: true,
                 appId: data.signpackage.appId,
