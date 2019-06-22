@@ -231,7 +231,7 @@
               localStorage.setItem("active", res.data.promote)
               that.active = res.data.promote;
               document.getElementById('title').innerHTML = res.data.promote.title
-              let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.origin;
+              let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href;
               let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
               this.WXConfig.wxShowMenu(Host, res.data.promote.share_image,  res.data.promote.share_title, api);
               break;
