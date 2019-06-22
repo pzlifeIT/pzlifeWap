@@ -4,4 +4,4 @@ export default {
       apiHost :'https://wwwapi.pzlive.vip/index/'
     }
   }
-}
+} 
