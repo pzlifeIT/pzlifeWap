@@ -69,7 +69,7 @@ export default {
               console.log(res.data.code)
               if (res.data.code == 200){
                 // localStorage.setItem('bg',bg_image)
-                bg.active.big_image = bg_image
+                bg.image = bg_image
               }
             })
           }
