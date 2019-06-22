@@ -1,45 +1,6 @@
 <template>
   <div>
-    <div id="pop" v-if="status">
-      <div class="info">
-        <img class="yuan" @click="toHome()" src="https://webimages.pzlive.vip/cha_03.jpg" alt="">
-        <div class="input">
-          <div class="input-write">
-            <div class="input-cate">姓名</div>
-            <div class="mid"></div>
-            <input type="text" v-model="name" class="write-text" placeholder="请输入姓名"/>
-          </div>
-          <div class="input-write">
-            <div class="input-cate">手机号</div>
-            <div class="mid"></div>
-            <input type="text" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
-          </div>
-        </div>
-        <div class="submit" @click="submit()">提交</div>
-      </div>
-    </div>
 
-    <div class="pop-hint" v-else>
-      <div class="pop-center">
-        <div class="title">
-          <p>报名成功</p>
-          <p>去分享给好友，一起成为合伙人吧</p>
-        </div>
-        <div class="pop-button" @click="toHome">
-          我知道了
-        </div>
-      </div>
-    </div>
-    <div class="pop-hint" v-if="msg">
-      <div class="pop-center">
-        <div class="title">
-          <p class="hint">{{title}}</p>
-        </div>
-        <div class="pop-button" @click="toB">
-          我知道了
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -90,43 +51,53 @@
           mobile: phone,
           nick_name: name
         }).then((res) => {
+          let home =  localStorage.getItem("home").split("?")[1];
+          // that.$router.push({path: '/?'+home});
           switch (parseInt(res.data.code)) {
             case 200:
-              that.status = true;
+              that.status = false;
               break;
             case 3000:
               that.title = '发送失败';
               that.msg = true;
+              that.status = true;
               break;
             case 3001:
             case 3002:
               that.title = "con_id错误";
               that.msg = true;
+              that.status = true;
               break;
             case 3003:
               that.title = 'promote_id有误';
               that.msg = true;
+              that.status = true;
               break;
             case 3004:
               that.title = '手机号错误';
               that.msg = true;
+              that.status = true;
               break;
             case 3005:
               that.title = '已经参加过了';
               that.msg = true;
+              that.status = true;
               break;
             case 3006:
               that.title = '请填写姓名';
               that.msg = true;
+              that.status = true;
               break;
             default:
               that.title = '未知错误';
               that.msg = true;
+              that.status = true;
               break;
           }
         }).catch((res) => {
           that.title = "网络错误";
-          that.msg = true
+          that.msg = true;
+          that.status = true;
         })
         console.log(name)
         this.status = false
@@ -140,8 +111,9 @@
       }
     },
     mounted() {
-      let hid = this.$route.params.hid;
-      this.hid = hid
+      let id = this.$route.params.hid;
+      alert(id)
+      this.hid = id
     }
   }
 </script>

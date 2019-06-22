@@ -9,12 +9,7 @@
 <script>
   // import A from './components/bossActive.vue'
   export default {
-    name: 'App',
-    data(){
-      return{
-        webTitle:"招募合伙人"
-      }
-    }
+    name: 'App'
   }
 </script>
 

@@ -11,6 +11,7 @@ export default {
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
       console.log(getMsg)
+      console.log(window.location.href.split('#')[0])
       wx.config({
         debug: true, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
@@ -42,7 +43,7 @@ export default {
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link: window.location.origin, // 分享链接
+          link: window.location.href.split('#')[0], // 分享链接
           imgUrl: share_img, // 分享图标
           success:function () {
               Vue.axios.get(api).then((res)=>{
@@ -55,7 +56,7 @@ export default {
         wx.onMenuShareAppMessage({
           title: share_title, // 分享标题
           desc: "", // 分享描述
-          link: window.location.origin, // 分享链接
+          link: window.location.href.split('#')[0], // 分享链接
           imgUrl: share_img, // 分享图标
           success:function () {
             Vue.axios.get(api).then((res)=>{

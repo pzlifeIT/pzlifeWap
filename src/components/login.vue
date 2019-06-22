@@ -88,7 +88,7 @@
         }
         let phone = this.phone;
         let api = this.host.apiHost + '/user/sendvercode'
-        Vue.axios.post(api, {mobile: phone, stype: 3}).then((res) => {
+        Vue.axios.post(api, {mobile: phone, stype: 1}).then((res) => {
           if (res.data.code == 200) {
             this.timeOut()
           }
@@ -121,8 +121,8 @@
           this.msg = true;
           return
         }
-        this.loginState = 1
-        this.wxLogin(1)
+        localStorage.setItem('loginStatus',1);
+        this.wxLogin()
 
       },
       //判断是否是微信
@@ -138,11 +138,10 @@
         }
       },
       WX() {
-        this.loginState = 2;
-        this.wxLogin(2)
+        localStorage.setItem('loginStatus',2);
+        this.wxLogin()
       },
-      verCode() {
-        let code = localStorage.getItem('code');
+      verCode(code) {
         let mobile = this.phone;
         let vercode = this.vercode;
         let api = this.host.apiHost + 'user/wxregister';
@@ -151,8 +150,9 @@
           console.log(res);
           switch (parseInt(res.data.code)) {
             case 200:
-              localStorage.setItem("con_id", res.con_id);
-              that.$router.push({path: '/'});
+              localStorage.setItem("con_id", res.data.con_id);
+              let home =  localStorage.getItem("home").split("?")[1];
+              that.$router.push({path: '/?'+home});
               break;
             case 3001:
               that.title = '手机号码错误';
@@ -191,18 +191,18 @@
         })
       },
       //微信登录獲取授權code
-      wxLogin(state) {
+      wxLogin() {
         if (!this.isWx()) {
           return
         }
-        if (state == 1 && localStorage.getItem('code')) {
-          this.verCode();
-          return
-        } else if (state == 2 && localStorage.getItem('code')) {
-          this.wxregister();
-          return
-
-        }
+        // if (state == 1 && localStorage.getItem('code')) {
+        //   this.verCode();
+        //   return
+        // } else if (state == 2 && localStorage.getItem('code')) {
+        //   this.wxregister();
+        //   return
+        //
+        // }
         //如果code不存在就去获取code
         let api = this.host.apiHost + 'user/wxaccredit';
         let that = this
@@ -210,18 +210,12 @@
         let loca = window.location.href;
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
+          // alert(res.data.requestUrl)
           console.log(res.data.requestUrl)
+         // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeead1475c05cde84&redirect_uri=https%3A%2F%2Fwapdev.pzlive.vip%2Flogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
           switch (parseInt(res.data.code)) {
             case 200:
               window.location.href = res.data.requestUrl;
-              // Vue.axios.get(res.data.requestUrl).then((res) => {
-              //   console.log(123 + res)
-                that.isCode();
-              // }, (res) => {
-              //   that.title = res;
-              //   that.msg = true;
-              //   console.log("456" + res)
-              // });
               break;
             case 3000:
               that.title = "错误码:" + res.data.code;
@@ -248,32 +242,35 @@
       isCode() {
         //獲取當前域名
         let url = window.location.href;
+        let loginState =  localStorage.getItem("loginStatus");
         console.log(url);
         if (url.indexOf("code") != -1) {
-          localStorage.setItem("loginStatus", false);
+          // localStorage.setItem("loginStatus", false);
           //將code拿出來,存進緩存
           let code = url.split("?")[1].split("&")[0].split("=")[1];
-          localStorage.setItem("code", code);
+          console.log(code);
           //利用code進行登陸
-          if (this.loginState == 1) {
-            this.verCode();
-          } else if (this.loginState == 2) {
-            this.wxregister();
+          if (loginState == 1) {
+            this.verCode(code);
+          } else if (loginState == 2) {
+            this.wxregister(code);
+          } else {
+           alert('loginState为空')
           }
         } else {
           console.log('未获取到code')
         }
       },
       //用code登陸
-      wxregister() {
-        let code = localStorage.getItem("code");
+      wxregister(code) {
         let api = this.host.apiHost + 'user/loginuserbywx';
         let that = this;
         Vue.axios.post(api, {code: code, platform: 2}).then((res) => {
-          switch (parseInt(res.code)) {
+          switch (parseInt(res.data.code)) {
             case 200:
-              localStorage.setItem("con_id", res.con_id);
-              that.$router.push({path: '/'});
+              localStorage.setItem("con_id", res.data.con_id);
+              let home =  localStorage.getItem("home").split("?")[1];
+              that.$router.push({path: '/?'+home});
               break;
             case 3000:
             case 3002:
@@ -300,6 +297,7 @@
       }
     },
     mounted() {
+      // alert(window.location.href);
       this.isWx();
       this.isCode()
     },
