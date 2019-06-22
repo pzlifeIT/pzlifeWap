@@ -2,10 +2,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
 import config from '../static/config'
+import bg from '../src/components/bossActive'
 Vue.use(VueAxios,axios);
-// Vue.use(config)
+Vue.use(bg)
 export default {
-  wxShowMenu: function (host,share_img,share_title,api) {
+  wxShowMenu: function (host,share_img,share_title,api,bg_image) {
     // let api = this.host;
     console.log(host)
     Vue.axios.get(host).then(function (res) {
@@ -50,6 +51,9 @@ export default {
           success:function () {
               Vue.axios.get(api).then((res)=>{
                 console.log(res.data.code)
+                if (res.data.code == 200){
+                  localStorage.setItem('bg',bg_image)
+                }
               })
           }
         });
@@ -63,6 +67,9 @@ export default {
           success:function () {
             Vue.axios.get(api).then((res)=>{
               console.log(res.data.code)
+              if (res.data.code == 200){
+                localStorage.setItem('bg',bg_image)
+              }
             })
           }
         });
