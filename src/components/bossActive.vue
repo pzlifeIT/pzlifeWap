@@ -254,8 +254,6 @@
     },
     mounted() {
       this.enUrl();
-      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
-      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       console.log(window.location.href.split('#')[0])
       this.isCon_id();
       this.getActive();
