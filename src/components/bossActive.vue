@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="container">
-      <img class="img" :src="active.big_image" alt="">
+      <img class="img" :src="big_image" alt="ss">
       <div class="jump" @click="goPageB()">报名参加</div>
       <router-view></router-view>
     </div>
@@ -73,7 +73,7 @@
         loginStatus: localStorage.getItem("loginStatus") || false,
         webTitle: "招募合伙人",
         img: "",
-        active: {},
+        big_image:'',
         hid: 0,
         pid: 0,
         name: '',
@@ -227,23 +227,20 @@
         let that = this;
         let api = this.host.apiHost + 'wap/getSupPromote';
         let id = this.hid;
+        // alert('get'+id)
         console.log(id)
         Vue.axios.get(api + '/?promote_id=' + id).then((res) => {
           console.log(res)
           switch (parseInt(res.data.code)) {
             case 200:
-              localStorage.setItem("active", res.data.promote)
-              that.active = res.data.promote;
-              let img = res.data.promote.bg_image;
-              // document.getElementById('title').innerHTML = res.data.promote.title
+              that.big_image = res.data.promote.big_image;
+              // alert(that.big_image)
+              // alert(res.data.promote.big_image)
               document.title = res.data.promote.title
               let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, res.data.promote.bg_image, function () {
-                console.log(img)
-                console.log(that.active)
-                that.active.big_image = img;
-                console.log(that.active)
+              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, function () {
+                that.big_image = res.data.promote.bg_image;
                 Vue.axios.get(api).then((res) => {
 
                 })
@@ -265,7 +262,9 @@
           let hid = url.split('?')[1].split('&')[0].split('=')[1];
           let pid = url.split('?')[1].split('&')[1].split('=')[1];
           this.hid = hid;
+          // alert(hid)
           this.pid = pid;
+          localStorage.setItem('pid',pid)
         }
 
       },
@@ -278,6 +277,7 @@
     },
     mounted() {
       this.enUrl();
+      // alert(this.big_image)
       let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
       let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       console.log(window.location.href.split('#')[0])

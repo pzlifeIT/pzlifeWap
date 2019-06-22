@@ -6,7 +6,7 @@
           <img src="https://webimages.pzlive.vip/logo1.png" alt="">
         </div>
         <div class="wx-login" @click="WX">微信登录</div>
-        <div class="wx-login phone" @click="codeLogin">手机号登录</div>
+        <div class="wx-login phone" @click="codeLogin">手机号注册</div>
       </div>
     </div>
     <div id="pop" v-if="pop">
@@ -21,10 +21,10 @@
           <div class="input-write">
             <div class="input-cate">手机号</div>
             <div class="mid"></div>
-            <input type="text" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
+            <input type="text" @blur.prevent="change()" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
           </div>
           <div class="input-write code">
-            <input type="text" class="write-code" v-model="vercode" placeholder="请输入验证码"/>
+            <input type="text" @blur.prevent="change()" class="write-code" v-model="vercode" placeholder="请输入验证码"/>
             <div class="button" @click="getCode()">{{text}}</div>
           </div>
         </div>
@@ -76,6 +76,9 @@
       know() {
         this.msg = false
       },
+      change() {
+        document.body.scrollTop = document.documentElement.clientHeight;
+      },
       //获取验证码
       getCode() {
         if (!this.isClick) {
@@ -91,7 +94,21 @@
         Vue.axios.post(api, {mobile: phone, stype: 1}).then((res) => {
           if (res.data.code == 200) {
             this.timeOut()
+          }else if(res.data.code == 3001){
+            this.title = '手机格式有误';
+            this.msg = true
+          }else if (res.data.code == 3002){
+            this.title = '发送类型有误';
+            this.msg = true
+          } else if (res.data.code == 3003){
+            this.title = '一分钟内不能再次发送';
+            this.msg = true
+          } else if (res.data.code == 3004){
+            this.title = '短信发送失败';
+            this.msg = true
           }
+        }).catch((res)=>{
+          this.network(res.response.status)
         })
       },
       timeOut: function () {
@@ -122,9 +139,9 @@
           return
         }
 
-        localStorage.setItem('loginStatus',1);
-        localStorage.setItem('mobile',this.phone);
-        localStorage.setItem('vercode',this.vercode);
+        localStorage.setItem('loginStatus', 1);
+        localStorage.setItem('mobile', this.phone);
+        localStorage.setItem('vercode', this.vercode);
         this.wxLogin()
 
       },
@@ -141,57 +158,148 @@
         }
       },
       WX() {
-        localStorage.setItem('loginStatus',2);
+        localStorage.setItem('loginStatus', 2);
         this.wxLogin()
       },
       verCode(code) {
-        let mobile =  localStorage.getItem('mobile');
+        let mobile = localStorage.getItem('mobile');
         let vercode = localStorage.getItem('vercode');
         let api = this.host.apiHost + 'user/wxregister';
         let that = this;
-        Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode}).then((res) => {
+        let buid = localStorage.getItem('pid')
+        Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode, buid: buid}).then((res) => {
           console.log(res);
           switch (parseInt(res.data.code)) {
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
-              let home =  localStorage.getItem("home").split("?")[1];
-              that.$router.replace({path: '/?'+home});
+              let home = localStorage.getItem("home").split("?")[1];
+              that.$router.replace({path: '/?' + home});
               break;
             case 3001:
               that.title = '手机号码错误';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500);
               break;
             case 3002:
-              localStorage.setItem('code', '');
-              that.title = 'code已失效，请再次点击登录重新获取';
+              that.title = 'code失效，请登录重新获取';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             case 3004:
             case 3006:
               that.title = '验证码错误';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500);
               break;
             case 3007:
               that.title = '注册失败';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             case 3008:
               that.title = "手机号已注册";
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             case 3009:
               that.title = '新用户需授权';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
           }
         }).catch((res) => {
-          that.title = "网络错误";
-          that.msg = true
+            this.network(res.response.status)
+          // that.title = "网络错误,即将跳转去首页";
+          // that.msg = true;
+          // setTimeout(function () {
+          //   let home = localStorage.getItem("home").split("?")[1];
+          //   that.$router.replace({path: '/?' + home});
+          // }, 1000)
+
         })
+      },
+      network(code) {
+        let text = ""
+        switch (parseInt(code)) {
+          case 201:
+          case 202:
+          case 203:
+          case 204:
+          case 205:
+          case 206:
+            text = "服务器无响应"
+            break;
+          case 400:
+            text = "错误请求"
+            break;
+          case 401:
+            text = "身份验证错误"
+            break;
+          case 403:
+            text = "服务器拒绝请求"
+            break;
+          case 404:
+          case 410:
+            text = "404错误"
+            break;
+          case 405:
+            text = "方法禁用"
+            break;
+          case 406:
+            text = "不接受请求"
+            break;
+          case 407:
+            text = "需要代理授权"
+            break;
+          case 408:
+            text = "请求超时"
+            break;
+          case 409:
+          case 411:
+          case 412:
+          case 415:
+          case 416:
+          case 417:
+            text = "请求格式出错"
+            break;
+          case 413:
+            text = "请求实体过大"
+            break;
+          case 414:
+            text = "请求的URI过长"
+            break;
+          case 500:
+          case 501:
+          case 502:
+          case 503:
+          case 504:
+          case 505:
+            text = "服务器错误"
+            break;
+          default:
+            text = "网络错误"
+        }
+        this.title = text;
+        this.msg = true
       },
       //微信登录獲取授權code
       wxLogin() {
@@ -211,6 +319,7 @@
         let that = this
         console.log(api)
         let loca = window.location.href;
+        localStorage.setItem('local',loca)
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
 
@@ -244,7 +353,7 @@
       isCode() {
         //獲取當前域名
         let url = window.location.href;
-        let loginState =  localStorage.getItem("loginStatus");
+        let loginState = localStorage.getItem("loginStatus");
         console.log(url);
         if (url.indexOf("code") != -1) {
           // localStorage.setItem("loginStatus", false);
@@ -257,7 +366,7 @@
           } else if (loginState == 2) {
             this.wxregister(code);
           } else {
-           alert('loginState为空')
+            alert('loginState为空')
           }
         } else {
           console.log('未获取到code')
@@ -269,34 +378,51 @@
         let vercode = this.vercode
         let api = this.host.apiHost + 'user/loginuserbywx';
         let that = this;
-        Vue.axios.post(api, {code: code, platform: 2}).then((res) => {
+        let buid = localStorage.getItem('pid');
+        Vue.axios.post(api, {code: code, platform: 2, buid: buid}).then((res) => {
           switch (parseInt(res.data.code)) {
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
-              let home =  localStorage.getItem("home").split("?")[1];
-              that.$router.replace({path: '/?'+home});
+              let home = localStorage.getItem("home").split("?")[1];
+              that.$router.replace({path: '/?' + home});
               break;
             case 3000:
             case 3002:
               that.title = '请使用手机号登录';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             case 3001:
-              localStorage.setItem('code', '');
-              that.title = 'code已失效，请再次点击登录重新获取';
+              that.title = 'code已失效，请登录重新获取';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             case 3003:
               that.title = '登录失败';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
+              setTimeout(function () {
+                window.location.replace(localStorage.getItem('local'))
+              },1500)
               break;
           }
         }).catch((res) => {
-          console.log(res)
+          that.title = "网络错误,即将跳转去首页";
+          that.msg = true;
+          setTimeout(function () {
+            let home = localStorage.getItem("home").split("?")[1];
+            that.$router.replace({path: '/?' + home});
+          }, 1000)
         })
       }
     },
@@ -304,6 +430,7 @@
       // alert(window.location.href);
       this.isWx();
       this.isCode()
+
     },
     beforeUpdate() {
       // this.isWx()
