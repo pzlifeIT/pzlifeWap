@@ -23,12 +23,12 @@
           <div class="input-write">
             <div class="input-cate">姓名</div>
             <div class="mid"></div>
-            <input type="text" v-model="name" class="write-text" placeholder="请输入姓名"/>
+            <input type="text" @blur.prevent="change()" v-model="name" class="write-text" placeholder="请输入姓名"/>
           </div>
           <div class="input-write">
             <div class="input-cate">手机号</div>
             <div class="mid"></div>
-            <input type="text" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
+            <input @blur.prevent="change()" type="text" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
           </div>
         </div>
         <div class="submit" @click="submit()">提交</div>
@@ -84,7 +84,8 @@
         title: "",
         isClick: true,
         text: "获取验证码",
-        know: false
+        know: false,
+        image: ''
       }
     },
     created() {
@@ -98,6 +99,9 @@
         } else {
           this.loginStatus = true
         }
+      },
+      change() {
+        document.body.scrollTop = document.documentElement.clientHeight;
       },
       toB() {
         this.msg = false
@@ -230,10 +234,24 @@
             case 200:
               localStorage.setItem("active", res.data.promote)
               that.active = res.data.promote;
-              document.getElementById('title').innerHTML = res.data.promote.title
+              let img = res.data.promote.bg_image;
+              // document.getElementById('title').innerHTML = res.data.promote.title
+              document.title = res.data.promote.title
               let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image,  res.data.promote.share_title, api);
+              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, res.data.promote.bg_image, function () {
+                console.log(img)
+                console.log(that.active)
+                that.active.big_image = img;
+                console.log(that.active)
+                Vue.axios.get(api).then((res) => {
+
+                })
+              });
+              let bg = localStorage.getItem('bg');
+              if (bg) {
+                this.active.big_image = bg
+              }
               break;
           }
         }, (res) => {
@@ -250,17 +268,25 @@
           this.pid = pid;
         }
 
+      },
+      bodyHeight() {
+        let h = document.body.clientHeight
+        window.onload = function () {
+          document.getElementById('app').style.height = h + 'px'
+        }
       }
     },
     mounted() {
       this.enUrl();
+      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
+      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       console.log(window.location.href.split('#')[0])
       this.isCon_id();
       this.getActive();
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
-
+      this.bodyHeight()
     }
   }
 </script>
@@ -315,7 +341,7 @@
   }
 
   .success {
-  margin-top: 20px;
+    margin-top: 20px;
   }
 
   .center {
@@ -375,7 +401,7 @@
 
   .info {
     width: 731px;
-    height: 727px;
+    height: 580px;
     background: #f7f7f7;
     position: absolute;
     bottom: 68px;

@@ -70,8 +70,8 @@
         this.pop = false
       },
       codeLogin() {
-        this.pop = true
         this.isWx()
+        this.pop = true
       },
       know() {
         this.msg = false
@@ -155,7 +155,7 @@
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
               let home =  localStorage.getItem("home").split("?")[1];
-              that.$router.push({path: '/?'+home});
+              that.$router.replace({path: '/?'+home});
               break;
             case 3001:
               that.title = '手机号码错误';
@@ -274,7 +274,7 @@
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
               let home =  localStorage.getItem("home").split("?")[1];
-              that.$router.push({path: '/?'+home});
+              that.$router.replace({path: '/?'+home});
               break;
             case 3000:
             case 3002:

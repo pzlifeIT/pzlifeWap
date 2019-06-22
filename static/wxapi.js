@@ -2,10 +2,12 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
 import config from '../static/config'
-Vue.use(VueAxios,axios);
-// Vue.use(config)
+import bg from '../src/components/bossActive'
+
+Vue.use(VueAxios, axios);
+Vue.use(bg)
 export default {
-  wxShowMenu: function (host,share_img,share_title,api) {
+  wxShowMenu: function (host, share_img, share_title, bg_image, callback) {
     // let api = this.host;
     console.log(host)
     Vue.axios.get(host).then(function (res) {
@@ -13,7 +15,7 @@ export default {
       console.log(getMsg.url)
       console.log(getMsg)
       wx.config({
-        debug: true, //生产环境需要关闭debug模式
+        debug: false, //生产环境需要关闭debug模式
         appId: getMsg.appId, //appId通过微信服务号后台查看
         timestamp: parseInt(getMsg.timestamp), //生成签名的时间戳
         nonceStr: getMsg.nonceStr, //生成签名的随机字符串
@@ -31,26 +33,24 @@ export default {
       wx.ready(function () {
         // wx.checkJsApi({
         //   jsApiList: ["onMenuShareAppMessage","onMenuShareTimeline"],
-          // success: function (res) {
-          //   wx.showMenuItems({
-          //     menuList: [
-          //       'menuItem:share:appMessage', //发送给朋友
-          //       'menuItem:share:timeline' //分享到朋友圈
-          //     ]
-          //   });
-          // }
+        // success: function (res) {
+        //   wx.showMenuItems({
+        //     menuList: [
+        //       'menuItem:share:appMessage', //发送给朋友
+        //       'menuItem:share:timeline' //分享到朋友圈
+        //     ]
+        //   });
+        // }
         // });
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link:getMsg.url, // 分享链接
+          link: getMsg.url, // 分享链接
           imgUrl: share_img, // 分享图标
-          success:function () {
-              Vue.axios.get(api).then((res)=>{
-                console.log(res.data.code)
-              })
+          success: function () {
+            callback()
           }
         });
 
@@ -60,10 +60,8 @@ export default {
           desc: "", // 分享描述
           link: getMsg.url, // 分享链接
           imgUrl: share_img, // 分享图标
-          success:function () {
-            Vue.axios.get(api).then((res)=>{
-              console.log(res.data.code)
-            })
+          success: function () {
+            callback()
           }
         });
       });
