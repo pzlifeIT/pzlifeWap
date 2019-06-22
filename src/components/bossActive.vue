@@ -244,9 +244,9 @@
         let url = window.location.href;
         // console.log(url)
         if (url.indexOf("?") != -1) {
-          let hid = url.split('?')[1].split('&')[0].split('=')[1];
+          // let hid = url.split('?')[1].split('&')[0].split('=')[1];
           // let pid = url.split('?')[1].split('&')[1].split('=')[1];
-          this.hid = hid;
+          // this.hid = hid;
           // this.pid = pid;
         }
 
