@@ -271,7 +271,7 @@
       bodyHeight() {
         let h = document.body.clientHeight
         window.onload = function () {
-          document.getElementById('app').style.height = h + 'px'
+          document.getElementById('app').top = 0 + 'px'
         }
       }
     },
