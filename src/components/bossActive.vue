@@ -23,12 +23,12 @@
           <div class="input-write">
             <div class="input-cate">姓名</div>
             <div class="mid"></div>
-            <input type="text" @blur.prevent="change()" v-model="name" class="write-text" placeholder="请输入姓名"/>
+            <input type="text"  v-model="name" class="write-text" placeholder="请输入姓名"/>
           </div>
           <div class="input-write">
             <div class="input-cate">手机号</div>
             <div class="mid"></div>
-            <input @blur.prevent="change()" type="text" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
+            <input  type="text" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
           </div>
         </div>
         <div class="submit" @click="submit()">提交</div>
