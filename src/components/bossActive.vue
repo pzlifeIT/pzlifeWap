@@ -1,7 +1,7 @@
 <template>
   <div ref="outer" class="outer">
     <div id="container">
-      <img class="img" :src="big_image" alt="ss">
+      <img class="img" :src="big_image" alt="">
       <img v-for="(v,index) in detail" :src="v.image_path" alt="" class="detail-img">
       <div class="bottom"></div>
       <div class="jump-wai">
@@ -120,7 +120,8 @@
         oFocus: false,
         oBlur: false,
         tBlur: false,
-        isCanScroll: false
+        isCanScroll: false,
+        clickStatus:true
       }
     },
     created() {
@@ -238,6 +239,8 @@
       //提交
       submit() {
         document.body.scrollTop = document.body.scrollIntoView();
+        if (!this.clickStatus) return
+        this.status = false
         let that = this;
         let name = this.name;
         let phone = this.phone;
@@ -262,6 +265,7 @@
           nick_name: name,
           vercode: vercode
         }).then((res) => {
+          that.clickStatus = true
           let home = localStorage.getItem("home").split("?")[1];
           // that.$router.push({path: '/?'+home});
           switch (parseInt(res.data.code)) {
@@ -315,6 +319,7 @@
               break;
           }
         }).catch((res) => {
+          that.clickStatus = true
           this.network(res.response.status)
           that.know = false;
         })

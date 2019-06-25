@@ -63,7 +63,8 @@
         title: "",
         webTitle: "登录",
         loginState: 0,
-        isCanScroll:false
+        isCanScroll:false,
+        clickStatus:true
       }
     },
     methods: {
@@ -165,7 +166,8 @@
           this.msg = true;
           return
         }
-
+        if (!this.clickStatus)  return
+        this.clickStatus = false
         localStorage.setItem('loginStatus', 1);
         localStorage.setItem('mobile', this.phone);
         localStorage.setItem('vercode', this.vercode);
@@ -186,6 +188,8 @@
       },
       WX() {
         localStorage.setItem('loginStatus', 2);
+        if (!this.clickStatus)  return
+        this.clickStatus = false
         this.wxLogin()
       },
       verCode(code) {
@@ -196,6 +200,7 @@
         let buid = localStorage.getItem('pid')
         Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode, buid: buid}).then((res) => {
           console.log(res);
+          that.clickStatus = true
           switch (parseInt(res.data.code)) {
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
@@ -238,8 +243,11 @@
 
               break;
           }
+
         }).catch((res) => {
+          that.clickStatus = true
             this.network(res.response.status)
+
         })
       },
       network(code) {
@@ -319,6 +327,7 @@
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
           console.log(res.data.requestUrl)
+          that.clickStatus = true
           switch (parseInt(res.data.code)) {
             case 200:
               window.location.href = res.data.requestUrl;
@@ -340,8 +349,11 @@
               that.msg = true;
               break
           }
+
         }).catch((res) => {
+          that.clickStatus = true
           this.network(res.response.status)
+
         })
       },
       isCode() {
@@ -362,8 +374,6 @@
           } else {
             alert('loginState为空')
           }
-        } else {
-          console.log('未获取到code')
         }
       },
       //用code登陸
@@ -406,8 +416,10 @@
 
               break;
           }
+          that.clickStatus = true
         }).catch((res) => {
           this.network(res.response.status)
+          that.clickStatus = true
         })
       }
     },
