@@ -4,7 +4,7 @@ import Vue from 'vue'
 import config from '../config/config'
 Vue.use(VueAxios, axios);
 export default {
-  wxShowMenu: function (host, share_img, share_title, callback) {
+  wxShowMenu: function (host, share_img, share_title,jump_url, callback) {
     // let api = this.host;
     console.log(host)
     Vue.axios.get(host).then(function (res) {
@@ -44,7 +44,7 @@ export default {
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link: getMsg.url, // 分享链接
+          link: jump_url, // 分享链接
           imgUrl: share_img, // 分享图标
           success: function () {
             callback()
@@ -55,7 +55,7 @@ export default {
         wx.onMenuShareAppMessage({
           title: share_title, // 分享标题
           desc: "", // 分享描述
-          link: getMsg.url, // 分享链接
+          link: jump_url, // 分享链接
           imgUrl: share_img, // 分享图标
           success: function () {
             callback()

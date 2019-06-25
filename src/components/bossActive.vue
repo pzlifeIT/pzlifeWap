@@ -351,10 +351,9 @@
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
              let newUrl = locaUrl.toString().replace(urlArray[1],res.data.data.uid)
               console.log(newUrl)
-              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(newUrl.split('#')[0]);
+              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, share_img, share_title, function () {
-                // that.qr_img = res.data.promote.bg_image;
+              this.WXConfig.wxShowMenu(Host, share_img, share_title, newUrl,function () {
                 that.qrcode = true
                 Vue.axios.get(api).then((res) => {
 
