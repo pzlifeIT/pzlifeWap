@@ -210,6 +210,7 @@
             case 3001:
               that.title = '手机号码错误';
               that.msg = true;
+
               break;
             case 3002:
               that.title = 'code失效，请登录重新获取';
@@ -243,11 +244,11 @@
 
               break;
           }
-
         }).catch((res) => {
           that.clickStatus = true
-            this.network(res.response.status)
-
+          that.network(res.response.status)
+          console.log(res.response)
+          that.t()
         })
       },
       network(code) {
@@ -353,7 +354,6 @@
         }).catch((res) => {
           that.clickStatus = true
           this.network(res.response.status)
-
         })
       },
       isCode() {
@@ -409,6 +409,7 @@
             case 3004:
               that.title = 'token获取失败';
               that.msg = true;
+
               break;
             default :
               that.title = '意料之外的错误';
@@ -416,12 +417,24 @@
 
               break;
           }
+
           that.clickStatus = true
         }).catch((res) => {
-          this.network(res.response.status)
+          console.log(res)
+          // this.network(res.response.status)
           that.clickStatus = true
         })
       }
+    },
+    t(){
+      console.log(localStorage.getItem('local'))
+      setTimeout(function () {
+        if (localStorage.getItem('local').indexOf('?') != -1){
+          window.location.replace(localStorage.getItem('local').split('?')[0])
+          return
+        }
+        window.location.replace(localStorage.getItem('local'))
+      },1500)
     },
     watch: {
       'isCanScroll'(value) {
