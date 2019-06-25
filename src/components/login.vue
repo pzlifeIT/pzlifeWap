@@ -21,10 +21,10 @@
           <div class="input-write">
             <div class="input-cate">手机号</div>
             <div class="mid"></div>
-            <input type="text" @blur.prevent="change()" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
+            <input type="text"  @blur="inpBlur()" @focus="inpFocus()"  v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
           </div>
           <div class="input-write code">
-            <input type="text" @blur.prevent="change()" class="write-code" v-model="vercode" placeholder="请输入验证码"/>
+            <input type="text"  @blur="inpBlur()" @focus="inpFocus()"  class="write-code" v-model="vercode" placeholder="请输入验证码"/>
             <div class="button" @click="getCode()">{{text}}</div>
           </div>
         </div>
@@ -62,16 +62,44 @@
         msg: false,
         title: "",
         webTitle: "登录",
-        loginState: 0
+        loginState: 0,
+        isCanScroll:false,
+        clickStatus:true
       }
     },
     methods: {
+      inpFocus() {
+        this.isCanScroll = false
+      },
+      inpBlur() {
+        this.isCanScroll = true
+
+      },
       toHome() {
+
         this.pop = false
       },
       codeLogin() {
         this.isWx()
         this.pop = true
+      },
+      setScroll(){
+        (/iphone|ipod|ipad/i.test(navigator.appVersion)) && document.addEventListener(
+          'blur',
+          event => {
+            // 当页面没出现滚动条时才执行，因为有滚动条时，不会出现这问题
+            // input textarea 标签才执行，因为 a 等标签也会触发 blur 事件
+            if (
+              document.documentElement.offsetHeight <=
+              document.documentElement.clientHeight &&
+              ['input', 'textarea'].includes(event.target.localName)
+            ) {
+              document.body.scrollIntoView() // 回顶部
+            }
+          },
+          true
+        )
+
       },
       know() {
         this.msg = false
@@ -90,7 +118,7 @@
           return
         }
         let phone = this.phone;
-        let api = this.host.apiHost + '/user/sendvercode'
+        let api = apiHost + '/user/sendvercode'
         Vue.axios.post(api, {mobile: phone, stype: 1}).then((res) => {
           if (res.data.code == 200) {
             this.timeOut()
@@ -138,7 +166,8 @@
           this.msg = true;
           return
         }
-
+        if (!this.clickStatus)  return
+        this.clickStatus = false
         localStorage.setItem('loginStatus', 1);
         localStorage.setItem('mobile', this.phone);
         localStorage.setItem('vercode', this.vercode);
@@ -159,16 +188,19 @@
       },
       WX() {
         localStorage.setItem('loginStatus', 2);
+        if (!this.clickStatus)  return
+        this.clickStatus = false
         this.wxLogin()
       },
       verCode(code) {
         let mobile = localStorage.getItem('mobile');
         let vercode = localStorage.getItem('vercode');
-        let api = this.host.apiHost + 'user/wxregister';
+        let api = apiHost + 'user/wxregister';
         let that = this;
         let buid = localStorage.getItem('pid')
         Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode, buid: buid}).then((res) => {
           console.log(res);
+          that.clickStatus = true
           switch (parseInt(res.data.code)) {
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
@@ -179,14 +211,14 @@
               that.title = '手机号码错误';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500);
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3002:
               that.title = 'code失效，请登录重新获取';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             case 3004:
@@ -194,47 +226,45 @@
               that.title = '验证码错误';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500);
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3007:
               that.title = '注册失败';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             case 3008:
               that.title = "手机号已注册";
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             case 3009:
               that.title = '新用户需授权';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
           }
         }).catch((res) => {
-            this.network(res.response.status)
-          // that.title = "网络错误,即将跳转去首页";
-          // that.msg = true;
-          // setTimeout(function () {
-          //   let home = localStorage.getItem("home").split("?")[1];
-          //   that.$router.replace({path: '/?' + home});
-          // }, 1000)
-
+          that.clickStatus = true
+          that.network(res.response.status)
+          console.log(res.response)
+          setTimeout(function () {
+            window.location.replace(window.location.origin + '/login')
+          },1500)
         })
       },
       network(code) {
@@ -306,24 +336,15 @@
         if (!this.isWx()) {
           return
         }
-        // if (state == 1 && localStorage.getItem('code')) {
-        //   this.verCode();
-        //   return
-        // } else if (state == 2 && localStorage.getItem('code')) {
-        //   this.wxregister();
-        //   return
-        //
-        // }
-        //如果code不存在就去获取code
-        let api = this.host.apiHost + 'user/wxaccredit';
+        let api = apiHost + 'user/wxaccredit';
         let that = this
         console.log(api)
         let loca = window.location.href;
         localStorage.setItem('local',loca)
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
-
           console.log(res.data.requestUrl)
+          that.clickStatus = true
           switch (parseInt(res.data.code)) {
             case 200:
               window.location.href = res.data.requestUrl;
@@ -345,9 +366,10 @@
               that.msg = true;
               break
           }
+
         }).catch((res) => {
-          that.title = '接口请求失败';
-          that.msg = true
+          that.clickStatus = true
+          this.network(res.response.status)
         })
       },
       isCode() {
@@ -368,15 +390,13 @@
           } else {
             alert('loginState为空')
           }
-        } else {
-          console.log('未获取到code')
         }
       },
       //用code登陸
       wxregister(code) {
         let mobile = this.phone
         let vercode = this.vercode
-        let api = this.host.apiHost + 'user/loginuserbywx';
+        let api = apiHost + 'user/loginuserbywx';
         let that = this;
         let buid = localStorage.getItem('pid');
         Vue.axios.post(api, {code: code, platform: 2, buid: buid}).then((res) => {
@@ -391,46 +411,68 @@
               that.title = '请使用手机号登录';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             case 3001:
               that.title = 'code已失效，请登录重新获取';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             case 3003:
               that.title = '登录失败';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
+              },1500)
+              break;
+            case 3004:
+              that.title = 'token获取失败';
+              that.msg = true;
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
               setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
+                window.location.replace(window.location.origin + '/login')
               },1500)
               break;
           }
+
+          that.clickStatus = true
         }).catch((res) => {
-          that.title = "网络错误,即将跳转去首页";
-          that.msg = true;
+          console.log(res)
+          this.network(res.response.status)
+          that.clickStatus = true
           setTimeout(function () {
-            let home = localStorage.getItem("home").split("?")[1];
-            that.$router.replace({path: '/?' + home});
-          }, 1000)
+            window.location.replace(window.location.origin + '/login')
+          },1500)
         })
+      }
+    },
+    watch: {
+      'isCanScroll'(value) {
+        if (value) {
+          // setTimeout(function () {
+          //   this.$refs.outer.scrollIntoView()
+          // }, 100)
+          setTimeout(() => {
+            window.scrollTo(0, document.body.scrollTop + 1);
+            document.body.scrollTop >= 1 && window.scrollTo(0, document.body.scrollTop - 1);
+          }, 10);
+        }
       }
     },
     mounted() {
       // alert(window.location.href);
       this.isWx();
       this.isCode()
-
+      this.setScroll()
     },
     beforeUpdate() {
       // this.isWx()
