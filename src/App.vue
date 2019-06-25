@@ -9,12 +9,17 @@
 <script>
   // import A from './components/bossActive.vue'
   export default {
-    name: 'App'
+    name: 'App',
+    methods:{
+
+    },
+    mounted(){
+
+    }
   }
 </script>
 
 <style>
-  @import "../static/css/main.css";l
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

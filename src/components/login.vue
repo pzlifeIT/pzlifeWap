@@ -21,10 +21,10 @@
           <div class="input-write">
             <div class="input-cate">手机号</div>
             <div class="mid"></div>
-            <input type="text" @blur.prevent="change()" v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
+            <input type="text"  @blur="inpBlur()" @focus="inpFocus()"  v-model="phone" class="write-text" placeholder="请输入你的手机号码"/>
           </div>
           <div class="input-write code">
-            <input type="text" @blur.prevent="change()" class="write-code" v-model="vercode" placeholder="请输入验证码"/>
+            <input type="text"  @blur="inpBlur()" @focus="inpFocus()"  class="write-code" v-model="vercode" placeholder="请输入验证码"/>
             <div class="button" @click="getCode()">{{text}}</div>
           </div>
         </div>
@@ -62,16 +62,43 @@
         msg: false,
         title: "",
         webTitle: "登录",
-        loginState: 0
+        loginState: 0,
+        isCanScroll:false
       }
     },
     methods: {
+      inpFocus() {
+        this.isCanScroll = false
+      },
+      inpBlur() {
+        this.isCanScroll = true
+
+      },
       toHome() {
+
         this.pop = false
       },
       codeLogin() {
         this.isWx()
         this.pop = true
+      },
+      setScroll(){
+        (/iphone|ipod|ipad/i.test(navigator.appVersion)) && document.addEventListener(
+          'blur',
+          event => {
+            // 当页面没出现滚动条时才执行，因为有滚动条时，不会出现这问题
+            // input textarea 标签才执行，因为 a 等标签也会触发 blur 事件
+            if (
+              document.documentElement.offsetHeight <=
+              document.documentElement.clientHeight &&
+              ['input', 'textarea'].includes(event.target.localName)
+            ) {
+              document.body.scrollIntoView() // 回顶部
+            }
+          },
+          true
+        )
+
       },
       know() {
         this.msg = false
@@ -178,63 +205,41 @@
             case 3001:
               that.title = '手机号码错误';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500);
               break;
             case 3002:
               that.title = 'code失效，请登录重新获取';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
             case 3004:
             case 3006:
               that.title = '验证码错误';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500);
+
               break;
             case 3007:
               that.title = '注册失败';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
             case 3008:
               that.title = "手机号已注册";
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
             case 3009:
               that.title = '新用户需授权';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
           }
         }).catch((res) => {
             this.network(res.response.status)
-          // that.title = "网络错误,即将跳转去首页";
-          // that.msg = true;
-          // setTimeout(function () {
-          //   let home = localStorage.getItem("home").split("?")[1];
-          //   that.$router.replace({path: '/?' + home});
-          // }, 1000)
-
         })
       },
       network(code) {
@@ -306,15 +311,6 @@
         if (!this.isWx()) {
           return
         }
-        // if (state == 1 && localStorage.getItem('code')) {
-        //   this.verCode();
-        //   return
-        // } else if (state == 2 && localStorage.getItem('code')) {
-        //   this.wxregister();
-        //   return
-        //
-        // }
-        //如果code不存在就去获取code
         let api = this.host.apiHost + 'user/wxaccredit';
         let that = this
         console.log(api)
@@ -322,7 +318,6 @@
         localStorage.setItem('local',loca)
         console.log(loca)
         Vue.axios.post(api, {redirect_uri: loca}).then((res) => {
-
           console.log(res.data.requestUrl)
           switch (parseInt(res.data.code)) {
             case 200:
@@ -346,8 +341,7 @@
               break
           }
         }).catch((res) => {
-          that.title = '接口请求失败';
-          that.msg = true
+          this.network(res.response.status)
         })
       },
       isCode() {
@@ -390,47 +384,51 @@
             case 3002:
               that.title = '请使用手机号登录';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
             case 3001:
               that.title = 'code已失效，请登录重新获取';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
             case 3003:
               that.title = '登录失败';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
+              break;
+            case 3004:
+              that.title = 'token获取失败';
+              that.msg = true;
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
-              setTimeout(function () {
-                window.location.replace(localStorage.getItem('local'))
-              },1500)
+
               break;
           }
         }).catch((res) => {
-          that.title = "网络错误,即将跳转去首页";
-          that.msg = true;
-          setTimeout(function () {
-            let home = localStorage.getItem("home").split("?")[1];
-            that.$router.replace({path: '/?' + home});
-          }, 1000)
+          this.network(res.response.status)
         })
+      }
+    },
+    watch: {
+      'isCanScroll'(value) {
+        if (value) {
+          // setTimeout(function () {
+          //   this.$refs.outer.scrollIntoView()
+          // }, 100)
+          setTimeout(() => {
+            window.scrollTo(0, document.body.scrollTop + 1);
+            document.body.scrollTop >= 1 && window.scrollTo(0, document.body.scrollTop - 1);
+          }, 10);
+        }
       }
     },
     mounted() {
       // alert(window.location.href);
       this.isWx();
       this.isCode()
-
+      this.setScroll()
     },
     beforeUpdate() {
       // this.isWx()
