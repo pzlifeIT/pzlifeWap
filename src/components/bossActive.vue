@@ -121,8 +121,7 @@
         tBlur: false,
         isCanScroll: false,
         clickStatus: true,
-        share_image: '',
-        share_title: ''
+        uid:''
       }
     },
     created() {
@@ -349,18 +348,7 @@
           console.log(res.data.data)
           switch (code) {
             case 200:
-              let locaUrl = window.location.href
-              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-             let newUrl = locaUrl.toString().replace(urlArray[1],res.data.data.uid)
-              console.log(newUrl)
-              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, share_img, share_title, newUrl,function () {
-                that.qrcode = true
-                Vue.axios.get(api).then((res) => {
-
-                })
-              });
+             that.uid = res.data.data.uid
               that.loginStatus = false;
               break;
             case 5000:
@@ -390,13 +378,20 @@
               that.big_image = res.data.promote.big_image;
               that.detail = res.data.detail;
               that.banner = res.data.banner;
-              that.share_image = res.data.promote.share_image;
-              that.share_title = res.data.promote.share_title;
-              console.log(that.share_image)
-              console.log(res.data.promote.share_image)
-
               document.title = res.data.promote.title
 
+              let locaUrl = window.location.href
+              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
+              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1],that.uid) : window.location.href
+              console.log(newUrl)
+              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
+              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, newUrl,function () {
+                that.qrcode = true
+                Vue.axios.get(api).then((res) => {
+
+                })
+              });
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
