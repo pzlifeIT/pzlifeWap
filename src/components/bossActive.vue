@@ -114,14 +114,16 @@
         title: "",
         isClick: true,
         text: "获取验证码",
-        know: false,
+        know: true,
         image: '',
         tFocus: false,
         oFocus: false,
         oBlur: false,
         tBlur: false,
         isCanScroll: false,
-        clickStatus:true
+        clickStatus: true,
+        share_img: '',
+        share_title: ''
       }
     },
     created() {
@@ -233,7 +235,7 @@
       iknow() {
         this.know = false
       },
-      cha(){
+      cha() {
         this.qrcode = false
       },
       //提交
@@ -327,21 +329,35 @@
       },
       none() {
         this.loginStatus = false
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
       },
       toLogin() {
         this.$router.push({path: '/login'});
         this.loginStatus = false
       },
+      //獲取用戶信息
       getUser() {
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
+        let share_img = this.share_img
+        let share_title = this.title
         //獲取成功就成功,如果是5000就提示登陸
         Vue.axios.post(api, {con_id: con_id}).then((res) => {
           let code = parseInt(res.data.code)
           switch (code) {
             case 200:
+              let newUrl = that.updateURLParameter(window.location.href,"pid",res.data.data.uid);
+              console.log(newUrl)
+              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(newUrl.split('#')[0]);
+              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+              this.WXConfig.wxShowMenu(Host, share_img, share_title, function () {
+                // that.qr_img = res.data.promote.bg_image;
+                that.qrcode = true
+                Vue.axios.get(api).then((res) => {
+
+                })
+              });
               that.loginStatus = false;
               break;
             case 5000:
@@ -358,6 +374,23 @@
       toHome() {
         this.status = false
       },
+      updateURLParameter(url, param, paramVal) {
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+          tempArray = additionalURL.split("&");
+          for (i = 0; i < tempArray.length; i++) {
+            if (tempArray[i].split('=')[0] != param) {
+              newAdditionalURL += temp + tempArray[i];
+              temp = "&";
+            }}
+        }
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+      },
       getActive() {
         let that = this;
         let api = apiHost + 'wap/getSupPromote';
@@ -371,19 +404,15 @@
               that.big_image = res.data.promote.big_image;
               that.detail = res.data.detail;
               that.banner = res.data.banner;
+              that.share_img = res.data.promote.share_image;
+              that.share_title = res.data.promote.share_title;
               console.log(that.detail)
               // alert(that.big_image)
               // alert(res.data.promote.big_image)
               document.title = res.data.promote.title
-              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, function () {
-                // that.qr_img = res.data.promote.bg_image;
-                that.qrcode = true
-                Vue.axios.get(api).then((res) => {
+              //http://127.0.0.1/?hid=1&pid=EE
 
-                })
-              });
+
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
@@ -393,7 +422,8 @@
         }, (res) => {
           console.log(res)
         })
-      },
+      }
+      ,
       enUrl() {
         let url = window.location.href;
         // console.log(url)
@@ -406,13 +436,15 @@
           localStorage.setItem('pid', pid)
         }
 
-      },
+      }
+      ,
       bodyHeight() {
         let h = document.body.clientHeight
         window.onload = function () {
           document.getElementById('app').style.height = h + 'px'
         }
-      },
+      }
+      ,
       network(code) {
         let text = ""
         switch (parseInt(code)) {
@@ -490,7 +522,8 @@
           }, 10);
         }
       }
-    },
+    }
+    ,
     mounted() {
       this.enUrl();
       // alert(this.big_image)
@@ -541,7 +574,8 @@
     width: 730px;
     height: 973px;
   }
-  .jump-wai{
+
+  .jump-wai {
     width: 750px;
     height: 110px;
     position: fixed;
@@ -555,6 +589,7 @@
     -webkit-align-items: center;
     background: #ffffff;
   }
+
   .jump {
     width: 730px;
     height: 88px;
@@ -569,10 +604,12 @@
     display: inline-block;
 
   }
-  .bottom{
+
+  .bottom {
     width: 750px;
     height: 120px;
   }
+
   .pop {
     width: 750px;
     height: 100%;
@@ -589,7 +626,7 @@
 
   .success {
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 
   .center {
@@ -668,7 +705,7 @@
   .detail-img {
     width: 730px;
     /*height: 750px;*/
-    object-fit: cover;
+    object-fit: contain;
     display: block;
 
   }
@@ -872,7 +909,8 @@
     text-align: center;
     margin-top: 70px;
   }
-  .cha{
+
+  .cha {
     position: absolute;
     bottom: -120px;
     width: 100px;
