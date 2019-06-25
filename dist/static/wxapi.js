@@ -1,7 +1,7 @@
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
-import config from '../static/config'
+import config from '../config/config'
 Vue.use(VueAxios, axios);
 export default {
   wxShowMenu: function (host, share_img, share_title, callback) {

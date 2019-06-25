@@ -125,7 +125,7 @@
       }
     },
     created() {
-      console.log(this.host.apiHost)
+      console.log(apiHost)
     },
     methods: {
       inpFocus() {
@@ -187,7 +187,7 @@
           return
         }
         let phone = this.phone;
-        let api = this.host.apiHost + '/user/sendvercode'
+        let api = apiHost + '/user/sendvercode'
         Vue.axios.post(api, {mobile: phone, stype: 5}).then((res) => {
           if (res.data.code == 200) {
             this.timeOut()
@@ -255,7 +255,7 @@
           this.msg = true;
           return
         }
-        let api = this.host.apiHost + 'wap/SupPromoteSignUp';
+        let api = apiHost + 'wap/SupPromoteSignUp';
         let hid = this.hid;
         let con_id = localStorage.getItem('con_id');
         Vue.axios.post(api, {
@@ -334,7 +334,7 @@
         this.loginStatus = false
       },
       getUser() {
-        let api = this.host.apiHost + 'user/getuser';
+        let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
         //獲取成功就成功,如果是5000就提示登陸
@@ -360,7 +360,7 @@
       },
       getActive() {
         let that = this;
-        let api = this.host.apiHost + 'wap/getSupPromote';
+        let api = apiHost + 'wap/getSupPromote';
         let id = this.hid;
         // alert('get'+id)
         console.log(id)
@@ -375,8 +375,8 @@
               // alert(that.big_image)
               // alert(res.data.promote.big_image)
               document.title = res.data.promote.title
-              let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-              let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
+              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
               this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, function () {
                 // that.qr_img = res.data.promote.bg_image;
                 that.qrcode = true
@@ -494,8 +494,8 @@
     mounted() {
       this.enUrl();
       // alert(this.big_image)
-      let Host = this.host.apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
-      let api = this.host.apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
+      let Host = apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
+      let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       console.log(window.location.href.split('#')[0])
       this.isCon_id();
       this.getActive();

@@ -118,7 +118,7 @@
           return
         }
         let phone = this.phone;
-        let api = this.host.apiHost + '/user/sendvercode'
+        let api = apiHost + '/user/sendvercode'
         Vue.axios.post(api, {mobile: phone, stype: 1}).then((res) => {
           if (res.data.code == 200) {
             this.timeOut()
@@ -195,7 +195,7 @@
       verCode(code) {
         let mobile = localStorage.getItem('mobile');
         let vercode = localStorage.getItem('vercode');
-        let api = this.host.apiHost + 'user/wxregister';
+        let api = apiHost + 'user/wxregister';
         let that = this;
         let buid = localStorage.getItem('pid')
         Vue.axios.post(api, {code: code, mobile: mobile, vercode: vercode, buid: buid}).then((res) => {
@@ -336,7 +336,7 @@
         if (!this.isWx()) {
           return
         }
-        let api = this.host.apiHost + 'user/wxaccredit';
+        let api = apiHost + 'user/wxaccredit';
         let that = this
         console.log(api)
         let loca = window.location.href;
@@ -396,7 +396,7 @@
       wxregister(code) {
         let mobile = this.phone
         let vercode = this.vercode
-        let api = this.host.apiHost + 'user/loginuserbywx';
+        let api = apiHost + 'user/loginuserbywx';
         let that = this;
         let buid = localStorage.getItem('pid');
         Vue.axios.post(api, {code: code, platform: 2, buid: buid}).then((res) => {
