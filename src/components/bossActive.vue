@@ -348,7 +348,8 @@
           console.log(res.data.data)
           switch (code) {
             case 200:
-              let newUrl = that.updateURLParameter(window.location.href,"pid",res.data.data.uid);
+              let urlArray = window.location.href.split("?")[1].split("&")[1].split("=")
+             let newUrl = window.location.href.toString().replace(urlArray[1],res.data.data.uid)
               console.log(newUrl)
               let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(newUrl.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
@@ -390,7 +391,7 @@
             }}
         }
         var rows_txt = temp + "" + param + "=" + paramVal;
-        return baseURL + "?" + newAdditionalURL + rows_txt;
+        return baseURL + "?" + rows_txt + newAdditionalURL;
       },
       getActive() {
         let that = this;
