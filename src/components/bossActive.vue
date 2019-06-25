@@ -345,6 +345,7 @@
         //獲取成功就成功,如果是5000就提示登陸
         Vue.axios.post(api, {con_id: con_id}).then((res) => {
           let code = parseInt(res.data.code)
+          console.log(res.data.data)
           switch (code) {
             case 200:
               let newUrl = that.updateURLParameter(window.location.href,"pid",res.data.data.uid);
