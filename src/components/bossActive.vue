@@ -121,7 +121,7 @@
         tBlur: false,
         isCanScroll: false,
         clickStatus: true,
-        share_img: '',
+        share_image: '',
         share_title: ''
       }
     },
@@ -377,23 +377,6 @@
       toHome() {
         this.status = false
       },
-      updateURLParameter(url, param, paramVal) {
-        var newAdditionalURL = "";
-        var tempArray = url.split("?");
-        var baseURL = tempArray[0];
-        var additionalURL = tempArray[1];
-        var temp = "";
-        if (additionalURL) {
-          tempArray = additionalURL.split("&");
-          for (i = 0; i < tempArray.length; i++) {
-            if (tempArray[i].split('=')[0] != param) {
-              newAdditionalURL += temp + tempArray[i];
-              temp = "&";
-            }}
-        }
-        var rows_txt = temp + "" + param + "=" + paramVal;
-        return baseURL + "?" + rows_txt + newAdditionalURL;
-      },
       getActive() {
         let that = this;
         let api = apiHost + 'wap/getSupPromote';
@@ -407,9 +390,10 @@
               that.big_image = res.data.promote.big_image;
               that.detail = res.data.detail;
               that.banner = res.data.banner;
-              that.share_img = res.data.promote.share_image;
+              that.share_image = res.data.promote.share_image;
               that.share_title = res.data.promote.share_title;
-              console.log(that.detail)
+              console.log(that.share_image)
+              console.log(res.data.promote.share_image)
 
               document.title = res.data.promote.title
 
