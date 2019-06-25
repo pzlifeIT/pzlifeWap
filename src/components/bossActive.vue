@@ -270,8 +270,12 @@
       },
       bodyHeight() {
         let h = document.body.clientHeight
-        window.onload = function () {
-          document.getElementById('app').scrollTop(0)
+        window.onresize = function () {
+          var ua = window.navigator.userAgent;
+            if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0) { //键盘收起页面空白问题
+                document.body.scrollTop = 0;
+                  document.documentElement.scrollTop=0;
+            }
         }
       }
     },
