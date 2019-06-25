@@ -114,7 +114,7 @@
         title: "",
         isClick: true,
         text: "获取验证码",
-        know: true,
+        know: false,
         image: '',
         tFocus: false,
         oFocus: false,
