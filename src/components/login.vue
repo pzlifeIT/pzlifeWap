@@ -447,7 +447,7 @@
           that.clickStatus = true
         }).catch((res) => {
           console.log(res)
-          // this.network(res.response.status)
+          this.network(res.response.status)
           that.clickStatus = true
           setTimeout(function () {
             window.location.replace(window.location.origin + '/login')
