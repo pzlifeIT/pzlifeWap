@@ -212,14 +212,14 @@
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3002:
               that.title = 'code失效，请登录重新获取';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3004:
             case 3006:
@@ -227,35 +227,35 @@
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3007:
               that.title = '注册失败';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3008:
               that.title = "手机号已注册";
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3009:
               that.title = '新用户需授权';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
           }
         }).catch((res) => {
@@ -264,7 +264,7 @@
           console.log(res.response)
           setTimeout(function () {
             window.location.replace(window.location.origin + '/login')
-          },1500)
+          },1200)
         })
       },
       network(code) {
@@ -412,35 +412,35 @@
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3001:
               that.title = 'code已失效，请登录重新获取';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3003:
               that.title = '登录失败';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             case 3004:
               that.title = 'token获取失败';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
-              },1500)
+              },1200)
               break;
           }
 
@@ -451,7 +451,7 @@
           that.clickStatus = true
           setTimeout(function () {
             window.location.replace(window.location.origin + '/login')
-          },1500)
+          },1200)
         })
       }
     },
