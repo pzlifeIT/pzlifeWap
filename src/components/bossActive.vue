@@ -101,7 +101,7 @@
         big_image: '',
         hid: 0,
         pid: 0,
-        qrcode: true,
+        qrcode: false,
         detail: [],
         banner: [],
         qr_img: "",
