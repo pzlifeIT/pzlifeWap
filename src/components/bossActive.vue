@@ -72,7 +72,7 @@
       <div class="qrcode">
         <div class="ok">
           <img class="icon" src="https://webimages.pzlive.vip/cg.png"/>
-          <span class="success">转发成功</span>
+          <span class="qr-success">转发成功</span>
         </div>
         <img class="line" src="https://webimages.pzlive.vip/xuxian.png" alt="">
         <img class="qr" src="https://webimages.pzlive.vip/gh_3a8652c886d6_344.jpg" alt="">
@@ -101,7 +101,7 @@
         big_image: '',
         hid: 0,
         pid: 0,
-        qrcode: '',
+        qrcode: true,
         detail: [],
         banner: [],
         qr_img: "",
@@ -834,9 +834,11 @@
   }
 
   .ok {
+    width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   .icon {
@@ -844,7 +846,7 @@
     height: 53px;
   }
 
-  .success {
+  .qr-success {
     color: #e61f18;
     font-size: 38px;
     display: inline-block;
@@ -859,8 +861,9 @@
 
   .qr {
     width: 370px;
-    height: 370px;
-    margin-top: 89px;
+    /*height: 370px;*/
+    margin-top: 59px;
+    object-fit: cover;
   }
 
   .more {
