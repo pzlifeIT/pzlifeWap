@@ -210,45 +210,61 @@
             case 3001:
               that.title = '手机号码错误';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3002:
               that.title = 'code失效，请登录重新获取';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3004:
             case 3006:
               that.title = '验证码错误';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3007:
               that.title = '注册失败';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3008:
               that.title = "手机号已注册";
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3009:
               that.title = '新用户需授权';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
           }
         }).catch((res) => {
           that.clickStatus = true
           that.network(res.response.status)
           console.log(res.response)
-          that.t()
+          setTimeout(function () {
+            window.location.replace(window.location.origin + '/login')
+          },1500)
         })
       },
       network(code) {
@@ -394,27 +410,37 @@
             case 3002:
               that.title = '请使用手机号登录';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3001:
               that.title = 'code已失效，请登录重新获取';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3003:
               that.title = '登录失败';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             case 3004:
               that.title = 'token获取失败';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
             default :
               that.title = '意料之外的错误';
               that.msg = true;
-
+              setTimeout(function () {
+                window.location.replace(window.location.origin + '/login')
+              },1500)
               break;
           }
 
@@ -423,18 +449,11 @@
           console.log(res)
           // this.network(res.response.status)
           that.clickStatus = true
+          setTimeout(function () {
+            window.location.replace(window.location.origin + '/login')
+          },1500)
         })
       }
-    },
-    t(){
-      console.log(localStorage.getItem('local'))
-      setTimeout(function () {
-        if (localStorage.getItem('local').indexOf('?') != -1){
-          window.location.replace(localStorage.getItem('local').split('?')[0])
-          return
-        }
-        window.location.replace(localStorage.getItem('local'))
-      },1500)
     },
     watch: {
       'isCanScroll'(value) {
