@@ -341,6 +341,8 @@
         let con_id = localStorage.getItem("con_id");
         let share_img = this.share_img
         let share_title = this.title
+        console.log(share_img)
+        console.log(share_title)
         //獲取成功就成功,如果是5000就提示登陸
         Vue.axios.post(api, {con_id: con_id}).then((res) => {
           let code = parseInt(res.data.code)
@@ -408,11 +410,8 @@
               that.share_img = res.data.promote.share_image;
               that.share_title = res.data.promote.share_title;
               console.log(that.detail)
-              // alert(that.big_image)
-              // alert(res.data.promote.big_image)
-              document.title = res.data.promote.title
-              //http://127.0.0.1/?hid=1&pid=EE
 
+              document.title = res.data.promote.title
 
               let bg = localStorage.getItem('bg');
               if (bg) {
