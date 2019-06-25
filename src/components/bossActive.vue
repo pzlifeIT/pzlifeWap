@@ -121,7 +121,9 @@
         tBlur: false,
         isCanScroll: false,
         clickStatus: true,
-        uid:''
+        uid:'',
+        share_title:'',
+        share_image:''
       }
     },
     created() {
@@ -168,7 +170,7 @@
       isCon_id() {
         //如果con_id存在就請求獲取用戶信息,如果沒有就提示登陸,登陸完成將con_id存進緩存
         if (localStorage.getItem("con_id")) {
-          this.getUser()
+          // this.getUser()
         } else {
           this.loginStatus = true
         }
@@ -334,7 +336,7 @@
         this.loginStatus = false
       },
       //獲取用戶信息
-      getUser() {
+      getUser(title,img) {
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
@@ -346,6 +348,19 @@
             case 200:
               that.uid = res.data.data.uid
               that.loginStatus = false;
+
+              let locaUrl = window.location.href
+              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
+              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1],that.uid) : window.location.href
+              console.log(newUrl)
+              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
+              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+              this.WXConfig.wxShowMenu(Host, img, title, newUrl,function () {
+                that.qrcode = true
+                Vue.axios.get(api).then((res) => {
+
+                })
+              });
               break;
             case 5000:
               that.loginStatus = true;
@@ -371,24 +386,16 @@
           console.log(res)
           switch (parseInt(res.data.code)) {
             case 200:
-              this.isCon_id();
+
               that.big_image = res.data.promote.big_image;
               that.detail = res.data.detail;
               that.banner = res.data.banner;
+              that.share_title = res.data.promote.share_title;
+              that.share_image = res.data.promote.share_image;
+
               document.title = res.data.promote.title
 
-              let locaUrl = window.location.href
-              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1],that.uid) : window.location.href
-              console.log(newUrl)
-              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, res.data.promote.share_image, res.data.promote.share_title, newUrl,function () {
-                that.qrcode = true
-                Vue.axios.get(api).then((res) => {
-
-                })
-              });
+              that.getUser(res.data.promote.share_title,res.data.promote.share_image)
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
