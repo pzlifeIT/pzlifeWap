@@ -338,17 +338,13 @@
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
-        let share_img = this.share_img
-        let share_title = this.title
-        console.log(share_img)
-        console.log(share_title)
         //獲取成功就成功,如果是5000就提示登陸
         Vue.axios.post(api, {con_id: con_id}).then((res) => {
           let code = parseInt(res.data.code)
           console.log(res.data.data)
           switch (code) {
             case 200:
-             that.uid = res.data.data.uid
+              that.uid = res.data.data.uid
               that.loginStatus = false;
               break;
             case 5000:
@@ -375,6 +371,7 @@
           console.log(res)
           switch (parseInt(res.data.code)) {
             case 200:
+              this.isCon_id();
               that.big_image = res.data.promote.big_image;
               that.detail = res.data.detail;
               that.banner = res.data.banner;
@@ -514,7 +511,7 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-      this.isCon_id();
+
     }
   }
 </script>
