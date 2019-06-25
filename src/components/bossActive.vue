@@ -87,7 +87,6 @@
   import Vue from 'vue'
   import axios from 'axios'
   import VueAxios from 'vue-axios'
-  import $ from 'jquery'
   // Vue.prototype.$axios = axios
   Vue.use(VueAxios, axios);
   export default {
@@ -348,8 +347,9 @@
           console.log(res.data.data)
           switch (code) {
             case 200:
-              let urlArray = window.location.href.split("?")[1].split("&")[1].split("=")
-             let newUrl = window.location.href.toString().replace(urlArray[1],res.data.data.uid)
+              let locaUrl = window.location.href
+              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
+             let newUrl = locaUrl.toString().replace(urlArray[1],res.data.data.uid)
               console.log(newUrl)
               let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(newUrl.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
