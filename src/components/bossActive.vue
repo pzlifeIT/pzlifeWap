@@ -51,7 +51,7 @@
       <div class="pop-center">
         <div class="title-share">
           <p class="success">报名成功</p>
-          <p>去分享给好友，一起成为合伙人吧</p>
+          <p>点击右上角分享给好友吧~</p>
         </div>
         <div class="pop-button" @click="iknow">
           我知道了
@@ -72,7 +72,7 @@
       <div class="qrcode">
         <div class="ok">
           <img class="icon" src="https://webimages.pzlive.vip/cg.png"/>
-          <span id="success">转发成功</span>
+          <span class="success">转发成功</span>
         </div>
         <img class="line" src="https://webimages.pzlive.vip/xuxian.png" alt="">
         <img class="qr" src="https://webimages.pzlive.vip/gh_3a8652c886d6_344.jpg" alt="">
@@ -844,7 +844,7 @@
     height: 53px;
   }
 
-  #success {
+  .success {
     color: #e61f18;
     font-size: 38px;
     display: inline-block;
