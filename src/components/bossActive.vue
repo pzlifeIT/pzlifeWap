@@ -94,7 +94,7 @@
     data() {
       return {
         where: 'a',
-        loginStatus: true,
+        loginStatus: false,
         webTitle: "招募合伙人",
         img: "",
         big_image: '',
@@ -200,7 +200,7 @@
       },
       goPageB() {
         // this.$router.push({path:"/b/"+ this.hid})
-        if (this.loginStatus){
+        if (!this.loginStatus){
           this.getUser(this.share_title,this.share_image)
           return
         }
