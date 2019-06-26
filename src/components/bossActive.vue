@@ -94,7 +94,7 @@
     data() {
       return {
         where: 'a',
-        loginStatus: localStorage.getItem("loginStatus") || false,
+        loginStatus: false,
         webTitle: "招募合伙人",
         img: "",
         big_image: '',
@@ -123,7 +123,8 @@
         clickStatus: true,
         uid:'',
         share_title:'',
-        share_image:''
+        share_image:'',
+        login:false
       }
     },
     created() {
@@ -136,36 +137,6 @@
       inpBlur() {
         this.isCanScroll = true
 
-      },
-      //第一个失去焦点，第二个获得，就什么也不做，反之亦然。
-      //如果是其中某个失去，但是另一个没有获取
-      oneBurl() {
-        this.oBlur = true
-        if (this.tFocus) {
-          return
-        }
-        if (!this.tBlur && !this.oBlur) {
-          return
-        }
-        document.body.scrollTop = document.body.scrollIntoView();
-      },
-
-      twoBurl() {
-        this.tBlur = true
-        if (this.oFocus) {
-          return
-        }
-        if (!this.tBlur && !this.oBlur) {
-          return
-        }
-        document.body.scrollTop = document.body.scrollIntoView();
-      },
-      oneFocus() {
-        //第一个获得焦点的时，第二个失去焦点，什么都不做
-        this.oFocus = true
-      },
-      twoFocus() {
-        this.tFocus = true
       },
       isCon_id() {
         //如果con_id存在就請求獲取用戶信息,如果沒有就提示登陸,登陸完成將con_id存進緩存
@@ -230,6 +201,10 @@
       },
       goPageB() {
         // this.$router.push({path:"/b/"+ this.hid})
+        if (!this.login){
+          this.getUser(this.share_title,this.share_image)
+          return
+        }
         this.status = true
       },
       iknow() {
@@ -348,7 +323,8 @@
             case 200:
               that.uid = res.data.data.uid
               that.loginStatus = false;
-
+              that.login = true
+              that.status = true
               let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1],that.uid) : window.location.href
@@ -364,9 +340,11 @@
               break;
             case 5000:
               that.loginStatus = true;
+              that.login = false
               break;
             default:
               that.loginStatus = true;
+              that.login = false
               break;
           }
         }).catch((res) => {
@@ -395,7 +373,7 @@
 
               document.title = res.data.promote.title
 
-              that.getUser(res.data.promote.share_title,res.data.promote.share_image)
+              // that.getUser(res.data.promote.share_title,res.data.promote.share_image)
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
@@ -405,8 +383,7 @@
         }, (res) => {
           console.log(res)
         })
-      }
-      ,
+      },
       enUrl() {
         let url = window.location.href;
         // console.log(url)
@@ -419,15 +396,13 @@
           localStorage.setItem('pid', pid)
         }
 
-      }
-      ,
+      },
       bodyHeight() {
         let h = document.body.clientHeight
         window.onload = function () {
           document.getElementById('app').style.height = h + 'px'
         }
-      }
-      ,
+      },
       network(code) {
         let text = ""
         switch (parseInt(code)) {
@@ -505,8 +480,7 @@
           }, 10);
         }
       }
-    }
-    ,
+    },
     mounted() {
       this.enUrl();
       // alert(this.big_image)
@@ -555,7 +529,8 @@
 
   .img {
     width: 730px;
-    height: 973px;
+    /*height: 973px;*/
+    height: auto;
   }
 
   .jump-wai {
@@ -687,8 +662,9 @@
 
   .detail-img {
     width: 730px;
+    height: auto;
     /*height: 750px;*/
-    object-fit: contain;
+    /*object-fit: contain;*/
     display: block;
 
   }
