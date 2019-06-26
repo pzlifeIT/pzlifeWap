@@ -974,11 +974,12 @@
     text-align: center;
     padding-left: 16px;
     box-sizing: border-box;
+    font-size: 30px;
   }
 
   .select option {
     text-align: center;
-    font-size:28px ;
+    font-size:30px ;
   }
 
   .select-text {
