@@ -48,7 +48,7 @@
             <div class="middle"></div>
             <div class="input-cate select-cate">年龄</div>
             <div class="mid"></div>
-            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="age" class="write-text select-text"
+            <input @blur="inpBlur()" @focus="inpFocus()" type="number" v-model="age" class="write-text select-text"
                    placeholder="请输入年龄"/>
           </div>
           <div class="input-write">
@@ -337,6 +337,22 @@
             case 3007:
             case 3008:
               that.title = '验证码错误';
+              that.msg = true;
+              break;
+            case 3009:
+              that.title = '性别格式不对';
+              that.msg = true;
+              break;
+            case 3010:
+              that.title = '年龄格式错误';
+              that.msg = true;
+              break;
+            case 3011:
+              that.title = '参与内容不能为空';
+              that.msg = true;
+              break;
+            case 3012:
+              that.title = '参与人不能为空';
               that.msg = true;
               break;
             case 5000:
