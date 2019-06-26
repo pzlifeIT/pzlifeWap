@@ -245,7 +245,7 @@
         let name = this.name;
         let phone = this.phone;
         let vercode = this.vercode;
-        let age = this.age;
+        let age = Math.floor(this.age);
         let content = this.content;
         let pname = this.pname;
         let sex = this.sex;
@@ -267,8 +267,8 @@
           this.msg = true;
           return
         }
-        if (age == ''){
-          this.title = '请填写年龄';
+        if (age == '' || age < 0 || age > 100){
+          this.title = '请检查年龄';
           this.msg = true;
           return
         }
