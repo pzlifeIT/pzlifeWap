@@ -230,6 +230,7 @@
       },
       goPageB() {
         // this.$router.push({path:"/b/"+ this.hid})
+        this.getUser(this.share_title,this.share_image)
         this.status = true
       },
       iknow() {
@@ -395,7 +396,7 @@
 
               document.title = res.data.promote.title
 
-              that.getUser(res.data.promote.share_title,res.data.promote.share_image)
+              // that.getUser(res.data.promote.share_title,res.data.promote.share_image)
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
@@ -405,8 +406,7 @@
         }, (res) => {
           console.log(res)
         })
-      }
-      ,
+      },
       enUrl() {
         let url = window.location.href;
         // console.log(url)
@@ -419,15 +419,13 @@
           localStorage.setItem('pid', pid)
         }
 
-      }
-      ,
+      },
       bodyHeight() {
         let h = document.body.clientHeight
         window.onload = function () {
           document.getElementById('app').style.height = h + 'px'
         }
-      }
-      ,
+      },
       network(code) {
         let text = ""
         switch (parseInt(code)) {
@@ -505,8 +503,7 @@
           }, 10);
         }
       }
-    }
-    ,
+    },
     mounted() {
       this.enUrl();
       // alert(this.big_image)
@@ -555,7 +552,8 @@
 
   .img {
     width: 730px;
-    height: 973px;
+    /*height: 973px;*/
+    height: auto;
   }
 
   .jump-wai {
@@ -687,8 +685,9 @@
 
   .detail-img {
     width: 730px;
+    height: auto;
     /*height: 750px;*/
-    object-fit: contain;
+    /*object-fit: contain;*/
     display: block;
 
   }
