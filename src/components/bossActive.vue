@@ -26,22 +26,48 @@
         <img class="yuan" @click="toHome()" src="https://webimages.pzlive.vip/cha_03.jpg" alt="">
         <div class="input">
           <div class="input-write">
-            <div class="input-cate">姓名</div>
+            <div class="input-cate">联系人姓名</div>
             <div class="mid"></div>
             <input type="text" @blur="inpBlur()" @focus="inpFocus()" v-model="name" class="write-text"
                    placeholder="请输入姓名"/>
           </div>
           <div class="input-write">
-            <div class="input-cate">手机号</div>
+            <div class="input-cate">联系人电话</div>
             <div class="mid"></div>
             <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="phone" class="write-text"
                    placeholder="请输入你的手机号码"/>
           </div>
-          <div class="input-write code">
-            <input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"
-                   placeholder="请输入验证码"/>
-            <div class="button" @click="getCode()">{{text}}</div>
+          <div class="input-write">
+            <div class="input-cate select-cate">性别</div>
+            <div class="mid"></div>
+            <select name="sex" id="" class="select" v-model="sex">
+              <option value="0">请选择性别</option>
+              <option value="1">男</option>
+              <option value="2">女</option>
+            </select>
+            <div class="middle"></div>
+            <div class="input-cate select-cate">年龄</div>
+            <div class="mid"></div>
+            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="age" class="write-text select-text"
+                   placeholder="请输入年龄"/>
           </div>
+          <div class="input-write">
+            <div class="input-cate">报名内容</div>
+            <div class="mid"></div>
+            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="content" class="write-text"
+                   placeholder="请输入报名项目内容"/>
+          </div>
+          <div class="input-write">
+            <div class="input-cate">参与人姓名</div>
+            <div class="mid"></div>
+            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"
+                   placeholder="请输入参与人姓名"/>
+          </div>
+          <!--<div class="input-write code">-->
+            <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
+                   <!--placeholder="请输入验证码"/>-->
+            <!--<div class="button" @click="getCode()">{{text}}</div>-->
+          <!--</div>-->
         </div>
         <div class="submit" @click="submit()">提交</div>
       </div>
@@ -93,9 +119,7 @@
     name: "bossActive",
     data() {
       return {
-        where: 'a',
         loginStatus: false,
-        webTitle: "招募合伙人",
         img: "",
         big_image: '',
         hid: 0,
@@ -107,18 +131,18 @@
         name: '',
         vercode: '',
         phone: '',
+        sex:0,
+        age:'',
+        pname:'',
+        content:'',
         code: '',
-        status: false,
+        status: true,
         msg: false,
         title: "",
         isClick: true,
         text: "获取验证码",
         know: false,
         image: '',
-        tFocus: false,
-        oFocus: false,
-        oBlur: false,
-        tBlur: false,
         isCanScroll: false,
         clickStatus: true,
         uid:'',
@@ -217,18 +241,44 @@
       submit() {
         document.body.scrollTop = document.body.scrollIntoView();
         if (!this.clickStatus) return
-        this.status = false
         let that = this;
         let name = this.name;
         let phone = this.phone;
-        let vercode = this.vercode
+        let vercode = this.vercode;
+        let age = this.age;
+        let content = this.content;
+        let pname = this.pname;
+        let sex = this.sex;
+        console.log(age)
+        console.log(content)
+        console.log(pname)
         if (name == '') {
           this.title = "请填写姓名";
           this.msg = true;
           return
         }
-        if (phone == '' || phone.length < 11) {
+        if (phone == '' || phone.length != 11) {
           this.title = "请检查手机号";
+          this.msg = true;
+          return
+        }
+        if (sex == 0){
+          this.title = '请选择性别';
+          this.msg = true;
+          return
+        }
+        if (age == ''){
+          this.title = '请填写年龄';
+          this.msg = true;
+          return
+        }
+        if (content == ''){
+          this.title = '请填写报名内容';
+          this.msg = true;
+          return
+        }
+        if (pname == ''){
+          this.title = '请填写参与人姓名';
           this.msg = true;
           return
         }
@@ -240,7 +290,10 @@
           con_id: con_id,
           mobile: phone,
           nick_name: name,
-          vercode: vercode
+          sex:sex,
+          age:age,
+          signinfo:content,
+          join_name:pname
         }).then((res) => {
           that.clickStatus = true
           let home = localStorage.getItem("home").split("?")[1];
@@ -656,7 +709,7 @@
     width: 650px;
     height: auto;
     overflow: hidden;
-    margin-top: 173px;
+    margin-top: 100px;
     display: block;
   }
 
@@ -677,12 +730,12 @@
     display: -webkit-flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
   }
 
   .input-cate {
     display: inline-block;
-    width: 135px;
+    width: 185px;
     height: 70px;
     text-align-last: justify;
     line-height: 70px;
@@ -695,7 +748,7 @@
   }
 
   .mid {
-    width: 1px;
+    width: 0px;
     height: 35px;
     border: 1px solid #666666;
     opacity: 0.43;
@@ -752,7 +805,7 @@
     font-weight: bold;
     position: absolute;
     left: 0;
-    bottom: 61px;
+    bottom: 51px;
     text-align: center;
     line-height: 88px;
     letter-spacing: 30px;
@@ -875,5 +928,27 @@
     width: 100px;
     height: 100px;
     left: 300px;
+  }
+  .select-cate{
+    width: 95px;
+    height: 100%;
+  }
+  .select{
+    width: 223px;
+    height: 100%;
+    outline: none;
+    border: none;
+    text-align: center;
+  }
+  .select option{
+    text-align: center;
+  }
+  .select-text{
+    width: 224px;
+  }
+  .middle{
+    width: 10px;
+    height: 100%;
+    background: #f7f7f7;
   }
 </style>
