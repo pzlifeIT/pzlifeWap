@@ -37,7 +37,7 @@ export default {
                   if (xhr.status == 200) {
                     console.log(new Date())
                       let html = xhr.responseText; 
-                      console.log(html.length)
+                      console.log(html)
                       html = html.replace(/data-src/g, "src"); 
                       let html_src = 'data:text/html;charset=utf-8,' + html; //解析码解决乱码
                       that.url = html_src
