@@ -94,7 +94,7 @@
     data() {
       return {
         where: 'a',
-        loginStatus: localStorage.getItem("loginStatus") || false,
+        loginStatus: false,
         webTitle: "招募合伙人",
         img: "",
         big_image: '',
@@ -136,36 +136,6 @@
       inpBlur() {
         this.isCanScroll = true
 
-      },
-      //第一个失去焦点，第二个获得，就什么也不做，反之亦然。
-      //如果是其中某个失去，但是另一个没有获取
-      oneBurl() {
-        this.oBlur = true
-        if (this.tFocus) {
-          return
-        }
-        if (!this.tBlur && !this.oBlur) {
-          return
-        }
-        document.body.scrollTop = document.body.scrollIntoView();
-      },
-
-      twoBurl() {
-        this.tBlur = true
-        if (this.oFocus) {
-          return
-        }
-        if (!this.tBlur && !this.oBlur) {
-          return
-        }
-        document.body.scrollTop = document.body.scrollIntoView();
-      },
-      oneFocus() {
-        //第一个获得焦点的时，第二个失去焦点，什么都不做
-        this.oFocus = true
-      },
-      twoFocus() {
-        this.tFocus = true
       },
       isCon_id() {
         //如果con_id存在就請求獲取用戶信息,如果沒有就提示登陸,登陸完成將con_id存進緩存
