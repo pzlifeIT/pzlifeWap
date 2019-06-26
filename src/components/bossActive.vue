@@ -123,7 +123,8 @@
         clickStatus: true,
         uid:'',
         share_title:'',
-        share_image:''
+        share_image:'',
+        login:false
       }
     },
     created() {
@@ -200,7 +201,7 @@
       },
       goPageB() {
         // this.$router.push({path:"/b/"+ this.hid})
-        if (!this.loginStatus){
+        if (!this.login){
           this.getUser(this.share_title,this.share_image)
           return
         }
@@ -322,7 +323,7 @@
             case 200:
               that.uid = res.data.data.uid
               that.loginStatus = false;
-
+              that.login = true
               let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1],that.uid) : window.location.href
@@ -338,9 +339,11 @@
               break;
             case 5000:
               that.loginStatus = true;
+              that.login = false
               break;
             default:
               that.loginStatus = true;
+              that.login = false
               break;
           }
         }).catch((res) => {
