@@ -578,6 +578,8 @@
 <style scoped>
   select {
     -webkit-appearance: none;
+    background-color: transparent;
+    border-color: transparent;
     /*text-indent: 4px;*/
   }
 
@@ -987,13 +989,16 @@
     height: 100%;
     background: #f7f7f7;
   }
-  .se-jt{
+
+  .se-jt {
     position: relative;
   }
+
   .p-select {
     color: #ccc;
   }
-  .jt{
+
+  .jt {
     display: inline-block;
     height: 20px;
     width: 20px;
