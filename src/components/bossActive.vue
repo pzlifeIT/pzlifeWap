@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div id="pop" v-if="status">
+    <div id="pop" @touchmove.prevent v-if="status">
       <div class="info">
         <img class="yuan" @click="toHome()" src="https://webimages.pzlive.vip/cha_03.jpg" alt="">
         <div class="input">
@@ -781,7 +781,7 @@
   .mid {
     width: 0px;
     height: 35px;
-    border: 1px solid #666666;
+    border: 2px solid #666666;
     opacity: 0.43;
     display: inline-block;
     margin-left: 20px;
