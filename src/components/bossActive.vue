@@ -978,6 +978,7 @@
 
   .select option {
     text-align: center;
+    font-size:28px ;
   }
 
   .select-text {
