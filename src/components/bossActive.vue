@@ -94,7 +94,7 @@
     data() {
       return {
         where: 'a',
-        loginStatus: false,
+        loginStatus: true,
         webTitle: "招募合伙人",
         img: "",
         big_image: '',
@@ -200,7 +200,10 @@
       },
       goPageB() {
         // this.$router.push({path:"/b/"+ this.hid})
-        this.getUser(this.share_title,this.share_image)
+        if (this.loginStatus){
+          this.getUser(this.share_title,this.share_image)
+          return
+        }
         this.status = true
       },
       iknow() {
