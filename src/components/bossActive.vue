@@ -40,11 +40,14 @@
           <div class="input-write">
             <div class="input-cate select-cate">性别</div>
             <div class="mid"></div>
-            <select name="sex" id="" class="select" v-model="sex">
-              <option value="0">请选择性别</option>
-              <option value="1">男</option>
-              <option value="2">女</option>
-            </select>
+            <div class="se-jt">
+              <select name="sex" id="" class="select" v-model="sex">
+                <option value="0" class="p-select">请选择性别</option>
+                <option value="1">男</option>
+                <option value="2">女</option>
+              </select>
+              <span class="jt"></span>
+            </div>
             <div class="middle"></div>
             <div class="input-cate select-cate">年龄</div>
             <div class="mid"></div>
@@ -575,6 +578,7 @@
 <style scoped>
   select {
     -webkit-appearance: none;
+    /*text-indent: 4px;*/
   }
 
   * {
@@ -966,6 +970,8 @@
     outline: none;
     border: none;
     text-align: center;
+    padding-left: 16px;
+    box-sizing: border-box;
   }
 
   .select option {
@@ -980,5 +986,22 @@
     width: 10px;
     height: 100%;
     background: #f7f7f7;
+  }
+  .se-jt{
+    position: relative;
+  }
+  .p-select {
+    color: #ccc;
+  }
+  .jt{
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 12px;
+    top: 0;
+    transform: rotate(135deg);
+    border-top: 1px solid #404040;
+    border-right: 1px solid #404040;
   }
 </style>
