@@ -338,25 +338,31 @@
             case 3008:
               that.title = '验证码错误';
               that.msg = true;
+              that.know = false;
               break;
             case 3009:
               that.title = '性别格式不对';
               that.msg = true;
+              that.know = false;
               break;
             case 3010:
               that.title = '年龄格式错误';
               that.msg = true;
+              that.know = false;
               break;
             case 3011:
               that.title = '参与内容不能为空';
               that.msg = true;
+              that.know = false;
               break;
             case 3012:
               that.title = '参与人不能为空';
               that.msg = true;
+              that.know = false;
               break;
             case 5000:
               that.loginStatus = true;
+              that.know = false;
               break;
             default:
               that.title = '意料之外的错误';
