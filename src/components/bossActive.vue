@@ -64,9 +64,9 @@
                    placeholder="请输入参与人姓名"/>
           </div>
           <!--<div class="input-write code">-->
-            <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
-                   <!--placeholder="请输入验证码"/>-->
-            <!--<div class="button" @click="getCode()">{{text}}</div>-->
+          <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
+          <!--placeholder="请输入验证码"/>-->
+          <!--<div class="button" @click="getCode()">{{text}}</div>-->
           <!--</div>-->
         </div>
         <div class="submit" @click="submit()">提交</div>
@@ -131,10 +131,10 @@
         name: '',
         vercode: '',
         phone: '',
-        sex:0,
-        age:'',
-        pname:'',
-        content:'',
+        sex: 0,
+        age: '',
+        pname: '',
+        content: '',
         code: '',
         status: false,
         msg: false,
@@ -145,10 +145,10 @@
         image: '',
         isCanScroll: false,
         clickStatus: true,
-        uid:'',
-        share_title:'',
-        share_image:'',
-        login:false
+        uid: '',
+        share_title: '',
+        share_image: '',
+        login: false
       }
     },
     created() {
@@ -225,8 +225,8 @@
       },
       goPageB() {
         // this.$router.push({path:"/b/"+ this.hid})
-        if (!this.login){
-          this.getUser(this.share_title,this.share_image)
+        if (!this.login) {
+          this.getUser(this.share_title, this.share_image)
           return
         }
         this.status = true
@@ -262,22 +262,22 @@
           this.msg = true;
           return
         }
-        if (sex == 0){
+        if (sex == 0) {
           this.title = '请选择性别';
           this.msg = true;
           return
         }
-        if (age == '' || age < 0 || age > 100){
+        if (age == '' || age < 0 || age > 100) {
           this.title = '请检查年龄';
           this.msg = true;
           return
         }
-        if (content == ''){
+        if (content == '') {
           this.title = '请填写报名内容';
           this.msg = true;
           return
         }
-        if (pname == ''){
+        if (pname == '') {
           this.title = '请填写参与人姓名';
           this.msg = true;
           return
@@ -290,10 +290,10 @@
           con_id: con_id,
           mobile: phone,
           nick_name: name,
-          sex:sex,
-          age:age,
-          signinfo:content,
-          join_name:pname
+          sex: sex,
+          age: age,
+          signinfo: content,
+          join_name: pname
         }).then((res) => {
           that.clickStatus = true
           let home = localStorage.getItem("home").split("?")[1];
@@ -386,7 +386,7 @@
         this.loginStatus = false
       },
       //獲取用戶信息
-      getUser(title,img) {
+      getUser(title, img) {
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
@@ -402,11 +402,11 @@
               that.status = true
               let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1],that.uid) : window.location.href
+              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid) : window.location.href
               console.log(newUrl)
               let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, img, title, newUrl,function () {
+              this.WXConfig.wxShowMenu(Host, img, title, newUrl, function () {
                 that.qrcode = true
                 Vue.axios.get(api).then((res) => {
 
@@ -573,6 +573,9 @@
 </script>
 
 <style scoped>
+  select {
+    -webkit-appearance: none;
+  }
 
   * {
     padding: 0;
@@ -951,24 +954,29 @@
     height: 100px;
     left: 300px;
   }
-  .select-cate{
+
+  .select-cate {
     width: 95px;
     height: 100%;
   }
-  .select{
+
+  .select {
     width: 223px;
     height: 100%;
     outline: none;
     border: none;
     text-align: center;
   }
-  .select option{
+
+  .select option {
     text-align: center;
   }
-  .select-text{
+
+  .select-text {
     width: 224px;
   }
-  .middle{
+
+  .middle {
     width: 10px;
     height: 100%;
     background: #f7f7f7;
