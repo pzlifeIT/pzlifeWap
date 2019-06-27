@@ -28,7 +28,7 @@
           <div class="input-write">
             <div class="input-cate">学员姓名</div>
             <div class="mid"></div>
-            <input type="text" @blur="inpBlur()" @focus="inpFocus()" v-model="name" class="write-text"
+            <input type="text" id="name" @blur="inpBlur()" @focus="inpFocus()" v-model="name" class="write-text"
                    placeholder="请输入姓名"/>
           </div>
           <div class="input-write">
@@ -166,7 +166,7 @@
     },
     methods: {
       inpFocus() {
-        document.body.style.height = window.innerHeight
+        // document.body.style.height = window.innerHeight
         this.isCanScroll = false
       },
       inpBlur() {
