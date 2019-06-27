@@ -397,7 +397,7 @@
           switch (code) {
             case 200:
               that.uid = res.data.data.uid
-              that.loginStatus = true;
+              that.loginStatus = false;
               that.login = true
               that.status = status
               let locaUrl = window.location.href
