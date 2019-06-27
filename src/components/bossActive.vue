@@ -57,8 +57,8 @@
           <div class="input-write textarea">
             <div class="input-cate textcate">报名内容</div>
             <div class="mid area-mid"></div>
-            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="content" class="write-text area"
-                   placeholder="请输入报名项目内容"/>
+            <textarea @blur="inpBlur()" @focus="inpFocus()" class="write-text area"
+                      placeholder="请输入报名项目内容">{{content}}</textarea>
           </div>
           <div class="input-write">
             <div class="input-cate">联系人姓名</div>
