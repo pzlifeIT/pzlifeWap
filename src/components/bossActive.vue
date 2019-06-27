@@ -589,14 +589,14 @@
       // this.getUser(false)
     },
     update(){
+
+    },
+    beforeUpdate(){
       if (window.location.href.indexOf("ls") != -1){
         this.getUser(true)
       } else {
         this.getUser(false)
       }
-    },
-    beforeUpdate(){
-
     }
   }
 </script>
