@@ -161,9 +161,6 @@
         login: false
       }
     },
-    created() {
-      console.log(apiHost)
-    },
     methods: {
       inpFocus() {
         // document.body.style.height = window.innerHeight
@@ -416,7 +413,7 @@
               that.loginStatus = false;
               that.login = true;
               that.status = status;
-              let locaUrl = localStorage.getItem("home") || window.location.href
+              let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : window.location.href.replace("&ls", '')
               console.log(newUrl.replace("&ls", ''));
@@ -577,8 +574,8 @@
       }
     },
     mounted() {
-      this.enUrl();
-      this.getActive();
+      // this.enUrl();
+      // this.getActive();
       // alert(this.big_image)
       let Host = apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
       let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
@@ -586,6 +583,7 @@
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
+      console.log( localStorage.getItem("home"))
       this.bodyHeight()
 
     }
