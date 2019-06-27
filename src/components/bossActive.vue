@@ -266,7 +266,7 @@
           return
         }
         if (phone == '' ) {
-          this.title = "请检查学员电话";
+          this.title = "请检查电话号码";
           this.msg = true;
           return
         }
@@ -363,7 +363,7 @@
               that.know = false;
               break;
             case 3013:
-              that.title = '学员电话不能为空';
+              that.title = '请检查电话号码';
               that.msg = true;
               that.know = false;
               break;

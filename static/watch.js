@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onresize = function () {
   let h = window.innerHeight
   let input = document.getElementById("name");
   function handler(){
