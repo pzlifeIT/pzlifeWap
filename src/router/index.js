@@ -27,11 +27,6 @@ export default new Router({
             name: 'Login',
             component: Login,
             meta: { title: "登录" }
-        }, {
-            path: '/article',
-            name: 'article',
-            component: article,
-            meta: { title: "文章" }
         }
     ]
 })
