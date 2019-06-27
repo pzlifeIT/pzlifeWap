@@ -261,12 +261,12 @@
         console.log(content)
         console.log(pname)
         if (name == '') {
-          this.title = "请填写姓名";
+          this.title = "请填写学员姓名";
           this.msg = true;
           return
         }
-        if (phone == '' || phone.length != 11) {
-          this.title = "请检查手机号";
+        if (phone == '' ) {
+          this.title = "请检查学员电话";
           this.msg = true;
           return
         }
@@ -286,7 +286,12 @@
           return
         }
         if (pname == '') {
-          this.title = '请填写参与人姓名';
+          this.title = '请填写联系人姓名';
+          this.msg = true;
+          return
+        }
+        if (pphone == '') {
+          this.title = '请填写联系人电话';
           this.msg = true;
           return
         }
