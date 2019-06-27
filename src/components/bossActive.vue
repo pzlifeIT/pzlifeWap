@@ -58,19 +58,19 @@
             <div class="input-cate textcate">报名内容</div>
             <div class="mid area-mid"></div>
             <textarea @blur="inpBlur()" @focus="inpFocus()" class="write-text area"
-                   v-model="content"   placeholder="请输入报名项目内容"></textarea>
+                      v-model="content" placeholder="请输入报名项目内容"></textarea>
           </div>
           <!--<div class="input-write">-->
-            <!--<div class="input-cate">联系人姓名</div>-->
-            <!--<div class="mid"></div>-->
-            <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"-->
-                   <!--placeholder="请输入联系人姓名"/>-->
+          <!--<div class="input-cate">联系人姓名</div>-->
+          <!--<div class="mid"></div>-->
+          <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"-->
+          <!--placeholder="请输入联系人姓名"/>-->
           <!--</div>-->
           <!--<div class="input-write">-->
-            <!--<div class="input-cate">联系人电话</div>-->
-            <!--<div class="mid"></div>-->
-            <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pphone" class="write-text"-->
-                   <!--placeholder="请输入联系人电话"/>-->
+          <!--<div class="input-cate">联系人电话</div>-->
+          <!--<div class="mid"></div>-->
+          <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pphone" class="write-text"-->
+          <!--placeholder="请输入联系人电话"/>-->
           <!--</div>-->
           <!--<div class="input-write code">-->
           <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
@@ -167,10 +167,16 @@
     methods: {
       inpFocus() {
         // document.body.style.height = window.innerHeight
-        this.isCanScroll = false
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+          this.isCanScroll = false
+        }
+
       },
       inpBlur() {
-        this.isCanScroll = true
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+          this.isCanScroll = true
+        }
+
 
       },
       isCon_id() {
@@ -265,7 +271,7 @@
           this.msg = true;
           return
         }
-        if (phone == '' ) {
+        if (phone == '') {
           this.title = "请检查电话号码";
           this.msg = true;
           return
@@ -409,8 +415,8 @@
               that.status = status;
               let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-              let newUrl =  res.data.data.uid ? locaUrl.toString().replace(urlArray[1],  res.data.data.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
-              console.log(newUrl.replace("&ls",''));
+              let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : window.location.href.replace("&ls", '')
+              console.log(newUrl.replace("&ls", ''));
               let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
               this.WXConfig.wxShowMenu(Host, that.share_image, that.share_title, newUrl, function () {
@@ -455,7 +461,7 @@
 
               document.title = res.data.promote.title
 
-              if (window.location.href.indexOf("ls") != -1){
+              if (window.location.href.indexOf("ls") != -1) {
                 this.getUser(true)
               } else {
                 this.getUser(false)
@@ -560,20 +566,18 @@
           // setTimeout(function () {
           //   this.$refs.outer.scrollIntoView()
           // }, 100)
-          if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-            setTimeout(() => {
-              window.scrollTo(0, document.body.scrollTop + 1);
-              document.body.scrollTop >= 1 && window.scrollTo(0, document.body.scrollTop - 1);
-            }, 10);
-          }
+          setTimeout(() => {
+            window.scrollTo(0, document.body.scrollTop + 1);
+            document.body.scrollTop >= 1 && window.scrollTo(0, document.body.scrollTop - 1);
+          }, 10);
         }
       }
     },
     mounted() {
-      if(/android/i.test(navigator.userAgent)){
+      if (/android/i.test(navigator.userAgent)) {
         console.log("This is Android'browser.");//这是Android平台下浏览器
       }
-      if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
         console.log("This is iOS'browser.");//这是iOS平台下浏览器
       }
       this.enUrl();
@@ -787,7 +791,7 @@
   .input-cate {
     display: inline-block;
     width: 185px;
-    height:100%;
+    height: 100%;
     text-align-last: justify;
     line-height: 70px;
     color: #404040;
@@ -797,7 +801,8 @@
     padding-left: 10px;
     box-sizing: border-box;
   }
-  .textcate{
+
+  .textcate {
     height: 101px;
     line-height: 101px;
   }
@@ -810,9 +815,11 @@
     display: inline-block;
     margin-left: 20px;
   }
-  .area-mid{
+
+  .area-mid {
     height: 145px;
   }
+
   .write-text {
     width: 510px;
     height: 100%;
@@ -823,7 +830,8 @@
     padding-left: 30px;
     box-sizing: border-box;
   }
-  .area{
+
+  .area {
     height: 145px;
     /*padding-top: 10px;*/
     box-sizing: border-box;
@@ -831,6 +839,7 @@
     outline: none;
     font-size: 30px;
   }
+
   .code {
     background: #f7f7f7;
   }
