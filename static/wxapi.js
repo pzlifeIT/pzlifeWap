@@ -8,7 +8,7 @@ export default {
   wxShowMenu: function (host, share_img, share_title, jump_url, callback) {
     // let api = this.host;
     console.log(host)
-    alert(jump_url);
+    // alert(jump_url);
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
       console.log(getMsg.url)
