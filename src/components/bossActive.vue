@@ -339,7 +339,7 @@
               that.know = false;
               break;
             case 3005:
-              that.title = '您已经参加过了';
+              that.title = '该参与人已参加过';
               that.msg = true;
               that.know = false;
               break;
@@ -371,6 +371,11 @@
               break;
             case 3012:
               that.title = '学员姓名不能为空';
+              that.msg = true;
+              that.know = false;
+              break;
+            case 3013:
+              that.title = '学员电话不能为空';
               that.msg = true;
               that.know = false;
               break;
