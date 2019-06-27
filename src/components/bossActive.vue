@@ -576,22 +576,23 @@
       }
     },
     mounted() {
+      this.getActive();
       this.enUrl();
       // alert(this.big_image)
       let Host = apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
       let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       console.log(window.location.href.split('#')[0])
-      this.getActive();
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
+    },
+    beforeUpdate(){
       if (window.location.href.indexOf("ls") != -1){
         this.getUser(this.share_title, this.share_image, true)
       } else {
         this.getUser(this.share_title, this.share_image, false)
       }
-
     }
   }
 </script>
