@@ -9,20 +9,21 @@ import config from '../config/config'
 import WXConfig from '../static/wxapi'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+
 Vue.use(config);
 Vue.config.productionTip = false;
 Vue.prototype.WXConfig = WXConfig;
-// router.beforeEach((to,from,next)=>{
-//   if (to.meta.title){
-//     document.title = to.meta.title
-//   }
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  if (to.path !== localStorage.getItem("home")) {
+    location.assign(to.fullPath)
+  }
+  next()
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
