@@ -419,7 +419,18 @@
               that.loginStatus = false;
               that.login = true;
               that.status = status;
+              let locaUrl = window.location.href
+              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
+              let newUrl =  res.data.data.uid ? locaUrl.toString().replace(urlArray[1],  res.data.data.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
+              console.log(newUrl.replace("&ls",''));
+              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
+              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+              this.WXConfig.wxShowMenu(Host, that.share_image, that.share_title, newUrl, function () {
+                that.qrcode = true
+                Vue.axios.get(api).then((res) => {
 
+                })
+              });
               break;
             case 5000:
               that.loginStatus = status;
@@ -575,7 +586,7 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-      this.getUser(false)
+      // this.getUser(false)
     },
     update(){
       if (window.location.href.indexOf("ls") != -1){
@@ -585,18 +596,7 @@
       }
     },
     beforeUpdate(){
-      let locaUrl = window.location.href
-      let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-      let newUrl = this.uid ? locaUrl.toString().replace(urlArray[1], this.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
-      console.log(newUrl.replace("&ls",''));
-      let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-      let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
-      this.WXConfig.wxShowMenu(Host, this.share_image, this.share_title, newUrl, function () {
-        that.qrcode = true
-        Vue.axios.get(api).then((res) => {
 
-        })
-      });
     }
   }
 </script>
