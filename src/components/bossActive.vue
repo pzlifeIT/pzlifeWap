@@ -745,7 +745,7 @@
     height: 797px;
     background: #f7f7f7;
     position: absolute;
-    bottom: 61px;
+    bottom: 0px;
     left: 10px;
   }
 
