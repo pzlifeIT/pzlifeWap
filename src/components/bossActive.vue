@@ -587,7 +587,7 @@
       localStorage.setItem("home", url);
       this.bodyHeight()
     },
-    beforeUpdate(){
+    update(){
       if (window.location.href.indexOf("ls") != -1){
         this.getUser(this.share_title, this.share_image, true)
       } else {
