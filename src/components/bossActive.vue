@@ -744,7 +744,7 @@
     width: 731px;
     height: 797px;
     background: #f7f7f7;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     left: 10px;
   }
