@@ -235,7 +235,7 @@
         this.msg = false
       },
       goPageB() {
-        this.getUser(this.share_title, this.share_image, true)
+        this.getUser(true)
         // this.status = true
       },
       iknow() {
@@ -586,17 +586,20 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-      // this.getUser(false)
-    },
-    update(){
+      setTimeout(function () {
+        this.getUser(false)
+      },900)
 
     },
+    update(){
+      // if (window.location.href.indexOf("ls") != -1){
+      //   this.getUser(true)
+      // } else {
+      //   this.getUser(false)
+      // }
+    },
     beforeUpdate(){
-      if (window.location.href.indexOf("ls") != -1){
-        this.getUser(true)
-      } else {
-        this.getUser(false)
-      }
+
     }
   }
 </script>
