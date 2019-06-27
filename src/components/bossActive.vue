@@ -166,6 +166,7 @@
     },
     methods: {
       inpFocus() {
+        document.body.style.height = window.innerHeight
         this.isCanScroll = false
       },
       inpBlur() {
