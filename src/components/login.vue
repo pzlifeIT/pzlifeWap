@@ -205,7 +205,8 @@
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
               let home = localStorage.getItem("home").split("?")[1];
-              that.$router.replace({path: '/?' + home + '&ls'});
+              // that.$router.replace({path: '/?' + home + '&ls'});
+              window.location.assign(localStorage.getItem("home"))
               break;
             case 3001:
               that.title = '手机号码错误';
@@ -404,7 +405,8 @@
             case 200:
               localStorage.setItem("con_id", res.data.con_id);
               let home = localStorage.getItem("home").split("?")[1];
-              that.$router.replace({path: '/?' + home + '&ls'});
+              // that.$router.replace({path: '/?' + home + '&ls'});
+              window.location.assign(localStorage.getItem("home"))
               break;
             case 3000:
             case 3002:
