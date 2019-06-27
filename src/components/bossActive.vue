@@ -228,7 +228,7 @@
         this.msg = false
       },
       goPageB() {
-        this.getUser(this.share_title, this.share_image)
+        this.getUser(this.share_title, this.share_image,true)
         // this.status = true
       },
       iknow() {
@@ -386,7 +386,7 @@
         this.loginStatus = false
       },
       //獲取用戶信息
-      getUser(title, img) {
+      getUser(title, img,status) {
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
@@ -414,11 +414,11 @@
               });
               break;
             case 5000:
-              that.loginStatus = true;
+              that.loginStatus = status;
               that.login = false
               break;
             default:
-              that.loginStatus = true;
+              that.loginStatus = status;
               that.login = false
               break;
           }
@@ -556,18 +556,21 @@
         }
       }
     },
+    beforeMount(){
+      this.getActive();
+    },
     mounted() {
       this.enUrl();
       // alert(this.big_image)
       let Host = apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
       let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       console.log(window.location.href.split('#')[0])
-      this.getActive();
+
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-
+      this.getUser(this.share_title, this.share_image,false)
     }
   }
 </script>
