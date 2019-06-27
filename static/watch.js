@@ -1,8 +1,8 @@
-import $ from 'jquery'
-$(function () {
-  let h = window.innerHeight;
-  $("#name").addEventListener('focus',handler,false);
-  function handler() {
-    $('body').height(h)
+window.onload = function () {
+  let h = window.innerHeight
+  let input = document.getElementById("name");
+  function handler(){
+   document.body.style.height = h;
   }
-})
+  input.addEventListener('focus',handler,false);
+}
