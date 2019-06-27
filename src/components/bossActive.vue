@@ -79,8 +79,9 @@
     <div class="pop-hint" v-if="know">
       <div class="pop-center">
         <div class="title-share">
-          <p class="success">报名成功</p>
-          <p>点击右上角分享给好友吧~</p>
+          <div class="pop-title">报名成功</div>
+          <img src="https://webimages.pzlive.vip/bao_03.jpg" alt="">
+          <p class="success-hint">点击右上角分享给好友吧~</p>
         </div>
         <div class="pop-button" @click="iknow">
           我知道了
@@ -227,12 +228,8 @@
         this.msg = false
       },
       goPageB() {
-        // this.$router.push({path:"/b/"+ this.hid})
-        if (!this.login) {
-          this.getUser(this.share_title, this.share_image)
-          return
-        }
-        this.status = true
+        this.getUser(this.share_title, this.share_image)
+        // this.status = true
       },
       iknow() {
         this.know = false
@@ -865,39 +862,62 @@
   }
 
   .pop-center {
-    width: 580px;
+    width: 530px;
     /*height: 238px;*/
     overflow: hidden;
-    background: #fff;
+    background: #f7f7f7;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
+    padding: 63px 0 36px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .title-share {
     width: 100%;
-    height: 148px;
+    /*height: 148px;*/
     text-align: center;
     /*line-height: 148px;*/
     color: #404040;
     font-size: 34px;
   }
 
-  p:nth-of-type(2) {
-    font-size: 28px;
+  .title-share img {
+    width: 262px;
+    height: 262px;
+    margin-top: 16px;
+  }
+
+  .success-hint {
+    font-size: 30px;
+    margin-top: 26px;
+  }
+
+  .pop-title {
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    color: #565251;
+    font-weight: bold;
   }
 
   .pop-button {
-    width: 100%;
-    height: 90px;
-    border-top: 1px solid #e2e2e2;
+    width: 408px;
+    height: 71px;
+    background: #e61f18;
+    color: #ffffff;
+    /*border-top: 1px solid #e2e2e2;*/
     display: flex;
     display: -webkit-flex;
     justify-content: center;
     font-size: 30px;
     text-align: center;
-    line-height: 90px;
-    color: #e61f18;
+    line-height: 71px;
+    margin-top: 26px;
+    border-radius: 5px;
   }
 
   .qrcode {
@@ -979,7 +999,7 @@
 
   .select option {
     text-align: center;
-    font-size:30px ;
+    font-size: 30px;
   }
 
   .select-text {

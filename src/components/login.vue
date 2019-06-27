@@ -408,7 +408,7 @@
               break;
             case 3000:
             case 3002:
-              that.title = '请使用手机号登录';
+              that.title = '请使用手机号注册';
               that.msg = true;
               setTimeout(function () {
                 window.location.replace(window.location.origin + '/login')
