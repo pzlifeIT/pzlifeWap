@@ -13,7 +13,7 @@
 
     <div class="pop" v-if="loginStatus">
       <div class="center">
-        <div class="title">请先登录</div>
+        <div class="title">报名联系人信息</div>
         <div class="button-login">
           <div class="left-button" @click="none">取消</div>
           <div class="left-button right" @click="toLogin()">确定</div>
