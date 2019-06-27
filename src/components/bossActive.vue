@@ -398,7 +398,7 @@
               that.loginStatus = false;
               that.login = true;
               that.status = status;
-              locaUrl = window.location.origin + '/?hid=' + that.hid + "&pid=" + that.pid + "&ls"
+              let locaUrl = window.location.origin + '/?hid=' + that.hid + "&pid=" + that.pid + "&ls"
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : window.location.href.replace("&ls", '')
               console.log(newUrl.replace("&ls", ''));
