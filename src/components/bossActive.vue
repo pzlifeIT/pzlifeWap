@@ -419,18 +419,7 @@
               that.loginStatus = false;
               that.login = true;
               that.status = status;
-              let locaUrl = window.location.href
-              let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
-              console.log(newUrl.replace("&ls",''))
-              let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-              let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
-              this.WXConfig.wxShowMenu(Host, img, title, newUrl, function () {
-                that.qrcode = true
-                Vue.axios.get(api).then((res) => {
 
-                })
-              });
               break;
             case 5000:
               that.loginStatus = status;
@@ -587,12 +576,26 @@
       localStorage.setItem("home", url);
       this.bodyHeight()
     },
-    update(){
+    beforeUpdate(){
       if (window.location.href.indexOf("ls") != -1){
-        this.getUser(this.share_title, this.share_image, true)
+        this.getUser(true)
       } else {
-        this.getUser(this.share_title, this.share_image, false)
+        this.getUser(false)
       }
+    },
+    update(){
+      let locaUrl = window.location.href
+      let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
+      let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
+      console.log(newUrl.replace("&ls",''))
+      let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
+      let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+      this.WXConfig.wxShowMenu(Host, this.share_image, this.share_title, newUrl, function () {
+        that.qrcode = true
+        Vue.axios.get(api).then((res) => {
+
+        })
+      });
     }
   }
 </script>
