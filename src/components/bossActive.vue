@@ -467,7 +467,11 @@
 
               document.title = res.data.promote.title
 
-              that.getUser(false)
+              if (window.location.href.indexOf("ls") != -1){
+                this.getUser(true)
+              } else {
+                this.getUser(false)
+              }
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
@@ -589,11 +593,7 @@
 
     },
     update(){
-      // if (window.location.href.indexOf("ls") != -1){
-      //   this.getUser(true)
-      // } else {
-      //   this.getUser(false)
-      // }
+
     },
     beforeUpdate(){
 
