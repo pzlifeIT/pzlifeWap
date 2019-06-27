@@ -146,7 +146,7 @@
         age: '',
         content: '',
         code: '',
-        status: true,
+        status: false,
         msg: false,
         title: "",
         isClick: true,
