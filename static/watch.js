@@ -1,8 +1,12 @@
 window.onresize = function () {
-  let h = window.innerHeight
-  let input = document.getElementById("name");
-  function handler(){
-    document.body.scrollTop = document.body.scrollIntoView();
+  if (/android/i.test(navigator.userAgent)) {
+    window.addEventListener('resize', function () {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        window.setTimeout(function () {
+          document.activeElement.scrollIntoViewIfNeeded()
+        }, 0)
+      }
+    })
   }
-  input.addEventListener('focus',handler,false);
+
 }

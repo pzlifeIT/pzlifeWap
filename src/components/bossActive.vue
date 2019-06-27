@@ -169,14 +169,17 @@
         // document.body.style.height = window.innerHeight
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
           this.isCanScroll = false
+        }else {
+          this.isCanScroll = false
         }
 
       },
       inpBlur() {
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
           this.isCanScroll = true
+        }else {
+          this.isCanScroll = false
         }
-
 
       },
       isCon_id() {
