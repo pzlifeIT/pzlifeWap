@@ -405,7 +405,7 @@
         this.loginStatus = false
       },
       //獲取用戶信息
-      getUser(title, img, status) {
+      getUser(status) {
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
@@ -575,6 +575,7 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
+      this.getUser(false)
     },
     update(){
       if (window.location.href.indexOf("ls") != -1){
@@ -587,7 +588,7 @@
       let locaUrl = window.location.href
       let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
       let newUrl = this.uid ? locaUrl.toString().replace(urlArray[1], this.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
-      console.log(newUrl.replace("&ls",''))
+      console.log(newUrl.replace("&ls",''));
       let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
       let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       this.WXConfig.wxShowMenu(Host, this.share_image, this.share_title, newUrl, function () {
