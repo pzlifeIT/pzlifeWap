@@ -87,7 +87,8 @@
         <div class="title-share">
           <div class="pop-title">报名成功</div>
           <img src="https://webimages.pzlive.vip/bao_03.jpg" alt="">
-          <p class="success-hint">点击右上角分享给好友吧~</p>
+          <p class="success-hint">点击右上角分享给好友</p>
+          <p class="success-hint">获得奖品</p>
         </div>
         <div class="pop-button" @click="iknow">
           我知道了
@@ -143,11 +144,9 @@
         phone: '',
         sex: 0,
         age: '',
-        pname: '',
         content: '',
-        pphone:'',
         code: '',
-        status: false,
+        status: true,
         msg: false,
         title: "",
         isClick: true,
@@ -285,16 +284,6 @@
           this.msg = true;
           return
         }
-        if (pname == '') {
-          this.title = '请填写联系人姓名';
-          this.msg = true;
-          return
-        }
-        if (pphone == '') {
-          this.title = '请填写联系人电话';
-          this.msg = true;
-          return
-        }
         let api = apiHost + 'wap/SupPromoteSignUp';
         let hid = this.hid;
         let con_id = localStorage.getItem('con_id');
@@ -305,9 +294,7 @@
           study_name: name,
           sex: sex,
           age: age,
-          signinfo: content,
-          nick_name: pname,
-          mobild:pphone
+          signinfo: content
         }).then((res) => {
           that.clickStatus = true
           let home = localStorage.getItem("home").split("?")[1];
@@ -791,7 +778,7 @@
   }
 
   .textarea {
-    height: 101px;
+    height: 201px;
   }
 
   .input-cate {
@@ -811,11 +798,7 @@
     height: 101px;
     line-height: 101px;
   }
-  area{
-    height: 101px;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+
   .mid {
     width: 0px;
     height: 35px;
@@ -825,7 +808,7 @@
     margin-left: 20px;
   }
   .area-mid{
-    height: 75px;
+    height: 105px;
   }
   .write-text {
     width: 510px;
@@ -837,7 +820,14 @@
     padding-left: 30px;
     box-sizing: border-box;
   }
-
+  .area{
+    height: 101px;
+    /*padding-top: 10px;*/
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: 30px;
+  }
   .code {
     background: #f7f7f7;
   }
