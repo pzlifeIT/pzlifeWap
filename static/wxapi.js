@@ -5,9 +5,10 @@ import config from '../config/config'
 
 Vue.use(VueAxios, axios);
 export default {
-  wxShowMenu: function (host, share_img, share_title, pid, hid, callback) {
+  wxShowMenu: function (host, share_img, share_title, jump_url, callback) {
     // let api = this.host;
     console.log(host)
+    alert(window.location.origin + '/?hid=' + hid + "&pid=" + pid);
     Vue.axios.get(host).then(function (res) {
       var getMsg = res.data.signPackage;
       console.log(getMsg.url)
@@ -45,7 +46,7 @@ export default {
         wx.onMenuShareTimeline({
           title: share_title, // 分享标题
           desc: "", //分享描述
-          link: window.location.origin + '/?hid=' + hid + "&pid=" + pid, // 分享链接
+          link: jump_url, // 分享链接
           imgUrl: share_img, // 分享图标
           success: function () {
             callback()
@@ -56,7 +57,7 @@ export default {
         wx.onMenuShareAppMessage({
           title: share_title, // 分享标题
           desc: "", // 分享描述
-          link: window.location.origin + '/?hid=' + hid + "&pid=" + pid, // 分享链接
+          link: jump_url, // 分享链接
           imgUrl: share_img, // 分享图标
           success: function () {
             callback()
