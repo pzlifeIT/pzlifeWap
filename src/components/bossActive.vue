@@ -560,14 +560,22 @@
           // setTimeout(function () {
           //   this.$refs.outer.scrollIntoView()
           // }, 100)
-          setTimeout(() => {
-            window.scrollTo(0, document.body.scrollTop + 1);
-            document.body.scrollTop >= 1 && window.scrollTo(0, document.body.scrollTop - 1);
-          }, 10);
+          if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+            setTimeout(() => {
+              window.scrollTo(0, document.body.scrollTop + 1);
+              document.body.scrollTop >= 1 && window.scrollTo(0, document.body.scrollTop - 1);
+            }, 10);
+          }
         }
       }
     },
     mounted() {
+      if(/android/i.test(navigator.userAgent)){
+        console.log("This is Android'browser.");//这是Android平台下浏览器
+      }
+      if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+        console.log("This is iOS'browser.");//这是iOS平台下浏览器
+      }
       this.enUrl();
       this.getActive();
       // alert(this.big_image)
@@ -578,12 +586,6 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-
-    },
-    update(){
-
-    },
-    beforeUpdate(){
 
     }
   }
