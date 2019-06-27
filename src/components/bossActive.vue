@@ -467,7 +467,7 @@
 
               document.title = res.data.promote.title
 
-              // that.getUser(res.data.promote.share_title,res.data.promote.share_image)
+              that.getUser(false)
               let bg = localStorage.getItem('bg');
               if (bg) {
                 this.active.big_image = bg
@@ -586,9 +586,6 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-      setTimeout(function () {
-        this.getUser(false)
-      },900)
 
     },
     update(){
