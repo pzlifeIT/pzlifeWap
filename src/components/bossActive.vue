@@ -161,6 +161,9 @@
         login: false
       }
     },
+    created() {
+      console.log(apiHost)
+    },
     methods: {
       inpFocus() {
         // document.body.style.height = window.innerHeight
@@ -574,8 +577,8 @@
       }
     },
     mounted() {
-      // this.enUrl();
-      // this.getActive();
+      this.enUrl();
+      this.getActive();
       // alert(this.big_image)
       let Host = apiHost + 'wap/getJsapiTicket/?url=' + window.location.href.split('#')[0];
       let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
