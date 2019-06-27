@@ -57,26 +57,8 @@
           <div class="input-write textarea">
             <div class="input-cate textcate">报名内容</div>
             <div class="mid area-mid"></div>
-            <textarea @blur="inpBlur()" @focus="inpFocus()" class="write-text area"
-                      v-model="content" placeholder="请输入报名项目内容"></textarea>
+            <textarea @blur="inpBlur()" @focus="inpFocus()" class="write-text area" v-model="content" placeholder="请输入报名项目内容"></textarea>
           </div>
-          <!--<div class="input-write">-->
-          <!--<div class="input-cate">联系人姓名</div>-->
-          <!--<div class="mid"></div>-->
-          <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"-->
-          <!--placeholder="请输入联系人姓名"/>-->
-          <!--</div>-->
-          <!--<div class="input-write">-->
-          <!--<div class="input-cate">联系人电话</div>-->
-          <!--<div class="mid"></div>-->
-          <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pphone" class="write-text"-->
-          <!--placeholder="请输入联系人电话"/>-->
-          <!--</div>-->
-          <!--<div class="input-write code">-->
-          <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
-          <!--placeholder="请输入验证码"/>-->
-          <!--<div class="button" @click="getCode()">{{text}}</div>-->
-          <!--</div>-->
         </div>
         <div class="submit" @click="submit()">提交</div>
       </div>
@@ -169,7 +151,7 @@
         // document.body.style.height = window.innerHeight
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
           this.isCanScroll = false
-        }else {
+        } else {
           this.isCanScroll = false
         }
 
@@ -177,7 +159,7 @@
       inpBlur() {
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
           this.isCanScroll = true
-        }else {
+        } else {
           this.isCanScroll = false
         }
 
@@ -417,6 +399,9 @@
               that.login = true;
               that.status = status;
               let locaUrl = window.location.href
+              if (locaUrl.indexOf("STATE") != -1) {
+                locaUrl = window.location.origin + '/?hid=' + that.hid + "&pid=" + that.pid + "&ls"
+              }
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : window.location.href.replace("&ls", '')
               console.log(newUrl.replace("&ls", ''));
@@ -586,7 +571,7 @@
       console.log(123456);
       let url = window.location.href
       localStorage.setItem("home", url);
-      console.log( localStorage.getItem("home"))
+      console.log(localStorage.getItem("home"))
       this.bodyHeight()
 
     }
