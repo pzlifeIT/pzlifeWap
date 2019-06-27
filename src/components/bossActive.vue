@@ -60,18 +60,18 @@
             <textarea @blur="inpBlur()" @focus="inpFocus()" class="write-text area"
                       placeholder="请输入报名项目内容">{{content}}</textarea>
           </div>
-          <div class="input-write">
-            <div class="input-cate">联系人姓名</div>
-            <div class="mid"></div>
-            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"
-                   placeholder="请输入联系人姓名"/>
-          </div>
-          <div class="input-write">
-            <div class="input-cate">联系人电话</div>
-            <div class="mid"></div>
-            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pphone" class="write-text"
-                   placeholder="请输入联系人电话"/>
-          </div>
+          <!--<div class="input-write">-->
+            <!--<div class="input-cate">联系人姓名</div>-->
+            <!--<div class="mid"></div>-->
+            <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"-->
+                   <!--placeholder="请输入联系人姓名"/>-->
+          <!--</div>-->
+          <!--<div class="input-write">-->
+            <!--<div class="input-cate">联系人电话</div>-->
+            <!--<div class="mid"></div>-->
+            <!--<input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pphone" class="write-text"-->
+                   <!--placeholder="请输入联系人电话"/>-->
+          <!--</div>-->
           <!--<div class="input-write code">-->
           <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
           <!--placeholder="请输入验证码"/>-->
@@ -813,6 +813,8 @@
   }
   area{
     height: 101px;
+    padding: 10px;
+    box-sizing: border-box;
   }
   .mid {
     width: 0px;
