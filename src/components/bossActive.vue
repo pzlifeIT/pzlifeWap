@@ -416,7 +416,7 @@
               that.loginStatus = false;
               that.login = true;
               that.status = status;
-              let locaUrl = window.location.href
+              let locaUrl = localStorage.getItem("home") || window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : window.location.href.replace("&ls", '')
               console.log(newUrl.replace("&ls", ''));
@@ -577,12 +577,6 @@
       }
     },
     mounted() {
-      if (/android/i.test(navigator.userAgent)) {
-        console.log("This is Android'browser.");//这是Android平台下浏览器
-      }
-      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-        console.log("This is iOS'browser.");//这是iOS平台下浏览器
-      }
       this.enUrl();
       this.getActive();
       // alert(this.big_image)
