@@ -474,7 +474,7 @@
       this.isCode()
       this.setScroll()
       if (window.location.href.indexOf("code") != -1){
-        window.location.replace(window.location.href.split("?")[0])
+        window.location.replace(window.location.origin+'/login')
       }
     },
     beforeUpdate() {
