@@ -398,9 +398,9 @@
               that.loginStatus = false;
               that.login = true;
               that.status = status;
-              let locaUrl = window.location.origin + '/?hid=' + that.hid + "&pid=" + that.pid + "&ls"
+              let locaUrl = window.location.origin + '/?hid=' + that.hid + "&pid=" + that.pid
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-              let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : window.location.href.replace("&ls", '')
+              let newUrl = res.data.data.uid ? locaUrl.toString().replace(urlArray[1], res.data.data.uid).replace("&ls", '') : locaUrl.split("&ls")[0]
               console.log(newUrl.replace("&ls", ''));
               let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
