@@ -808,7 +808,7 @@
     margin-left: 20px;
   }
   .area-mid{
-    height: 105px;
+    height: 145px;
   }
   .write-text {
     width: 510px;
@@ -821,7 +821,7 @@
     box-sizing: border-box;
   }
   .area{
-    height: 101px;
+    height: 145px;
     /*padding-top: 10px;*/
     box-sizing: border-box;
     border: none;
