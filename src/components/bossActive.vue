@@ -576,20 +576,20 @@
       localStorage.setItem("home", url);
       this.bodyHeight()
     },
-    beforeUpdate(){
+    update(){
       if (window.location.href.indexOf("ls") != -1){
         this.getUser(true)
       } else {
         this.getUser(false)
       }
     },
-    update(){
+    beforeUpdate(){
       let locaUrl = window.location.href
       let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-      let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
+      let newUrl = this.uid ? locaUrl.toString().replace(urlArray[1], this.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
       console.log(newUrl.replace("&ls",''))
       let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
-      let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
+      let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + this.hid + '&con_id=' + localStorage.getItem('con_id')
       this.WXConfig.wxShowMenu(Host, this.share_image, this.share_title, newUrl, function () {
         that.qrcode = true
         Vue.axios.get(api).then((res) => {
