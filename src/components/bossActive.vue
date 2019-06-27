@@ -411,8 +411,8 @@
               that.status = status;
               let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
-              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid) : window.location.href
-              console.log(newUrl)
+              let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid).replace("&ls",'') : window.location.href.replace("&ls",'')
+              console.log(newUrl.replace("&ls",''))
               let Host = apiHost + 'wap/getJsapiTicket/?url=' + encodeURIComponent(window.location.href.split('#')[0]);
               let api = apiHost + 'wap/getPromoteShareNum/?promote_id=' + that.hid + '&con_id=' + localStorage.getItem('con_id')
               this.WXConfig.wxShowMenu(Host, img, title, newUrl, function () {
