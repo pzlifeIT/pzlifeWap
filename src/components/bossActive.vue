@@ -26,16 +26,16 @@
         <img class="yuan" @click="toHome()" src="https://webimages.pzlive.vip/cha_03.jpg" alt="">
         <div class="input">
           <div class="input-write">
-            <div class="input-cate">联系人姓名</div>
+            <div class="input-cate">学员姓名</div>
             <div class="mid"></div>
             <input type="text" @blur="inpBlur()" @focus="inpFocus()" v-model="name" class="write-text"
                    placeholder="请输入姓名"/>
           </div>
           <div class="input-write">
-            <div class="input-cate">联系人电话</div>
+            <div class="input-cate">学员电话</div>
             <div class="mid"></div>
             <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="phone" class="write-text"
-                   placeholder="请输入你的手机号码"/>
+                   placeholder="请输入电话号码"/>
           </div>
           <div class="input-write">
             <div class="input-cate select-cate">性别</div>
@@ -54,17 +54,23 @@
             <input @blur="inpBlur()" @focus="inpFocus()" type="number" v-model="age" class="write-text select-text"
                    placeholder="请输入年龄"/>
           </div>
-          <div class="input-write">
-            <div class="input-cate">报名内容</div>
-            <div class="mid"></div>
-            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="content" class="write-text"
+          <div class="input-write textarea">
+            <div class="input-cate textcate">报名内容</div>
+            <div class="mid area-mid"></div>
+            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="content" class="write-text area"
                    placeholder="请输入报名项目内容"/>
           </div>
           <div class="input-write">
-            <div class="input-cate">参与人姓名</div>
+            <div class="input-cate">联系人姓名</div>
             <div class="mid"></div>
             <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pname" class="write-text"
-                   placeholder="请输入参与人姓名"/>
+                   placeholder="请输入联系人姓名"/>
+          </div>
+          <div class="input-write">
+            <div class="input-cate">联系人电话</div>
+            <div class="mid"></div>
+            <input @blur="inpBlur()" @focus="inpFocus()" type="text" v-model="pphone" class="write-text"
+                   placeholder="请输入联系人电话"/>
           </div>
           <!--<div class="input-write code">-->
           <!--<input type="text" @blur="inpBlur()" @focus="inpFocus()" class="write-code" v-model="vercode"-->
@@ -139,6 +145,7 @@
         age: '',
         pname: '',
         content: '',
+        pphone:'',
         code: '',
         status: false,
         msg: false,
@@ -228,7 +235,7 @@
         this.msg = false
       },
       goPageB() {
-        this.getUser(this.share_title, this.share_image,true)
+        this.getUser(this.share_title, this.share_image, true)
         // this.status = true
       },
       iknow() {
@@ -249,6 +256,7 @@
         let content = this.content;
         let pname = this.pname;
         let sex = this.sex;
+        let pphone = this.pphone
         console.log(age)
         console.log(content)
         console.log(pname)
@@ -288,12 +296,13 @@
         Vue.axios.post(api, {
           promote_id: hid,
           con_id: con_id,
-          mobile: phone,
-          nick_name: name,
+          study_mobile: phone,
+          study_name: name,
           sex: sex,
           age: age,
           signinfo: content,
-          join_name: pname
+          nick_name: pname,
+          mobild:pphone
         }).then((res) => {
           that.clickStatus = true
           let home = localStorage.getItem("home").split("?")[1];
@@ -351,12 +360,12 @@
               that.know = false;
               break;
             case 3011:
-              that.title = '参与内容不能为空';
+              that.title = '报名内容不能为空';
               that.msg = true;
               that.know = false;
               break;
             case 3012:
-              that.title = '参与人不能为空';
+              that.title = '学员姓名不能为空';
               that.msg = true;
               that.know = false;
               break;
@@ -386,7 +395,7 @@
         this.loginStatus = false
       },
       //獲取用戶信息
-      getUser(title, img,status) {
+      getUser(title, img, status) {
         let api = apiHost + 'user/getuser';
         let that = this;
         let con_id = localStorage.getItem("con_id");
@@ -556,9 +565,6 @@
         }
       }
     },
-    beforeMount(){
-
-    },
     mounted() {
       this.enUrl();
       // alert(this.big_image)
@@ -570,7 +576,7 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-      this.getUser(this.share_title, this.share_image,false)
+      this.getUser(this.share_title, this.share_image, false)
     }
   }
 </script>
@@ -728,10 +734,10 @@
 
   .info {
     width: 731px;
-    height: 727px;
+    height: 797px;
     background: #f7f7f7;
     position: absolute;
-    bottom: 68px;
+    bottom: 0px;
     left: 10px;
   }
 
@@ -740,7 +746,7 @@
     width: 650px;
     height: auto;
     overflow: hidden;
-    margin-top: 100px;
+    margin-top: 90px;
     display: block;
   }
 
@@ -761,13 +767,17 @@
     display: -webkit-flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+  }
+
+  .textarea {
+    height: 101px;
   }
 
   .input-cate {
     display: inline-block;
     width: 185px;
-    height: 70px;
+    height:100%;
     text-align-last: justify;
     line-height: 70px;
     color: #404040;
@@ -777,7 +787,13 @@
     padding-left: 10px;
     box-sizing: border-box;
   }
-
+  .textcate{
+    height: 101px;
+    line-height: 101px;
+  }
+  area{
+    height: 101px;
+  }
   .mid {
     width: 0px;
     height: 35px;
@@ -786,10 +802,12 @@
     display: inline-block;
     margin-left: 20px;
   }
-
+  .area-mid{
+    height: 75px;
+  }
   .write-text {
     width: 510px;
-    height: 70px;
+    height: 100%;
     border: none;
     outline: none;
     font-size: 30px;
