@@ -5,8 +5,8 @@
         <div class="logo">
           <img src="https://webimages.pzlive.vip/logo1.png" alt="">
         </div>
-        <div class="wx-login phone" @click="codeLogin">手机号登录</div>
-        <div class="wx-login" @click="WX">微信登录</div>
+        <div class="wx-login" @click="codeLogin">手机号登录</div>
+        <div class="wx-login phone" @click="WX">微信登录</div>
       </div>
     </div>
     <div id="pop" v-if="pop">
