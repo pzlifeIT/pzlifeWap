@@ -408,7 +408,7 @@
               that.uid = res.data.data.uid
               that.loginStatus = false;
               that.login = true;
-              that.status = true;
+              that.status = status;
               let locaUrl = window.location.href
               let urlArray = locaUrl.split("?")[1].split("&")[1].split("=")
               let newUrl = that.uid ? locaUrl.toString().replace(urlArray[1], that.uid) : window.location.href
@@ -576,7 +576,12 @@
       let url = window.location.href
       localStorage.setItem("home", url);
       this.bodyHeight()
-      this.getUser(this.share_title, this.share_image, false)
+      if (window.location.href.indexOf("ls") != -1){
+        this.getUser(this.share_title, this.share_image, true)
+      } else {
+        this.getUser(this.share_title, this.share_image, false)
+      }
+
     }
   }
 </script>
