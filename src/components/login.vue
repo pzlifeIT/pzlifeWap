@@ -3,7 +3,7 @@
     <div class="mask">
       <div class="center">
         <div class="logo">
-          <img src="https://webimages.pzlive.vip/logo1.png" alt="">
+          <img src="https://webimages.pzlive.vip/newlogo.png" alt="">
         </div>
         <div class="wx-login" @click="codeLogin">手机号登录</div>
         <div class="wx-login phone" @click="WX">微信登录</div>
@@ -510,8 +510,8 @@
   }
 
   .logo img {
-    width: 266px;
-    height: 122px;
+    width: 204px;
+    height: 204px;
   }
 
   .wx-login {
